@@ -17,6 +17,7 @@ use App\Http\Controllers\UserController;
 //     Route::resource('/post', PostController::class);
 //     Route::post('/post/{id}/toggle-published', [PostController::class, 'togglePublished'])->name('post.toggle-published');
 // });
+
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('auth.login');
