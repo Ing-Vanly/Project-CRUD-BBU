@@ -7,7 +7,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
 // Route::middleware(['auth'])->group(function () {
-
 //     Route::get('/', function () {
 //         return view('auth.login');
 //     });
