@@ -3,47 +3,70 @@
         <thead class="text-uppercase">
             <tr>
                 <th>{{ __('ID') }}</th>
-                <th>{{ __('Name') }}</th>
+                <th>{{ __('Title') }}</th>
                 <th>{{ __('Slug') }}</th>
-                <th>{{ __('Description') }}</th>
+                <th>{{ __('Author') }}</th>
+                <th>{{ __('Status') }}</th>
+                <th>{{ __('Published') }}</th>
                 <th>{{ __('Created') }}</th>
                 <th>{{ __('Action') }}</th>
             </tr>
         </thead>
         <tbody>
-            @if ($categories->count() > 0)
-                @foreach ($categories as $category)
+            {{-- @if ($posts->count() > 0)
+                @foreach ($posts as $post)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>
-                            <strong>{{ \Illuminate\Support\Str::limit($categories->name, 30) }}</strong>
+                            <strong>{{ \Illuminate\Support\Str::limit($post->title, 30) }}</strong>
+                            <div class="text-muted small">
+                                {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 50) }}</div>
                         </td>
-                        <td class="text-muted">{{ $categories->slug }}</td>
-                        <td>{{ $categories->created_at->format('M d, Y') }}</td>
-                        <td>{{ $categories->description }}</td>
+                        <td class="text-muted">{{ $post->slug }}</td>
+                        <td>{{ $post->user ? $post->user->name : 'N/A' }}</td>
+                        <td>
+                            @if ($post->is_active)
+                                <span class="badge badge-success">Active</span>
+                            @else
+                                <span class="badge badge-secondary">Inactive</span>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <label class="switch mr-2">
+                                    <input type="checkbox" class="toggle-published" data-id="{{ $post->id }}"
+                                        {{ $post->is_published ? 'checked' : '' }}>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="badge {{ $post->is_published ? 'badge-primary' : 'badge-warning' }}">
+                                    {{ $post->is_published ? 'Published' : 'Unpublished' }}
+                                </span>
+                            </div>
+                        </td>
+                        <td>{{ $post->created_at->format('M d, Y') }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-link btn-sm p-0" type="button"
-                                    id="actionDropdown{{ $category->id }}" data-toggle="dropdown" aria-haspopup="true"
+                                    id="actionDropdown{{ $post->id }}" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     <i class="fas fa-ellipsis-v text-muted"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right"
-                                    aria-labelledby="actionDropdown{{ $category->id }}">
-                                    <a class="dropdown-item" href="{{ route('category.show', $category->id) }}">
+                                    aria-labelledby="actionDropdown{{ $post->id }}">
+                                    <a class="dropdown-item" href="{{ route('post.show', $post->id) }}">
                                         <i class="fas fa-eye text-info mr-2"></i> {{ __('View') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('category.edit', $category->id) }}">
+                                    <a class="dropdown-item" href="{{ route('post.edit', $post->id) }}">
                                         <i class="fas fa-pencil-alt text-primary mr-2"></i> {{ __('Edit') }}
                                     </a>
-                                    <a class="dropdown-item btn-delete" href="#" data-id="{{ $category->id }}"
-                                        data-href="{{ route('category.destroy', $category->id) }}">
+                                    <a class="dropdown-item btn-delete" href="#" data-id="{{ $post->id }}"
+                                        data-href="{{ route('post.destroy', $post->id) }}">
                                         <i class="fas fa-trash-alt text-danger mr-2"></i> {{ __('Delete') }}
                                     </a>
                                 </div>
                             </div>
-                            <form action="{{ route('category.destroy', $category->id) }}" method="POST"
-                                class="d-none form-delete-{{ $category->id }}">
+                            <form action="{{ route('post.destroy', $post->id) }}" method="POST"
+                                class="d-none form-delete-{{ $post->id }}">
                                 @csrf
                                 @method('DELETE')
                             </form>
@@ -60,7 +83,7 @@
                         </div>
                     </td>
                 </tr>
-            @endif
+            @endif --}}
         </tbody>
     </table>
     {{-- @if ($posts->count() > 0)

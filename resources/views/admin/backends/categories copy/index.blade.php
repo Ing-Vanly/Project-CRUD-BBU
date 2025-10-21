@@ -86,13 +86,8 @@
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 @endpush
@@ -130,18 +125,15 @@
                             <div class="row mt-3">
                                 <div class="col-md-4">
                                     <div class="form-group mb-0">
-                                        <input type="text" class="form-control" id="searchFilter"
-                                            placeholder="{{ __('Search by title...') }}" value="{{ request('search') }}">
+                                        <input type="text" class="form-control" id="searchFilter" placeholder="{{ __('Search by title...') }}" value="{{ request('search') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group mb-0">
                                         <select class="form-control" id="statusFilter">
                                             <option value="">{{ __('All Status') }}</option>
-                                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>
-                                                {{ __('Active') }}</option>
-                                            <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>
-                                                {{ __('Inactive') }}</option>
+                                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>{{ __('Active') }}</option>
+                                            <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>{{ __('Inactive') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -149,10 +141,8 @@
                                     <div class="form-group mb-0">
                                         <select class="form-control" id="publishedFilter">
                                             <option value="">{{ __('All Published') }}</option>
-                                            <option value="1" {{ request('published') == '1' ? 'selected' : '' }}>
-                                                {{ __('Published') }}</option>
-                                            <option value="0" {{ request('published') == '0' ? 'selected' : '' }}>
-                                                {{ __('Unpublished') }}</option>
+                                            <option value="1" {{ request('published') == '1' ? 'selected' : '' }}>{{ __('Published') }}</option>
+                                            <option value="0" {{ request('published') == '0' ? 'selected' : '' }}>{{ __('Unpublished') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -215,6 +205,53 @@
                 }
             });
         });
+
+        // Handle published status toggle
+        $(document).on('change', '.toggle-published', function() {
+            const postId = $(this).data('id');
+            const isChecked = $(this).is(':checked');
+            const toggle = $(this);
+            const badge = toggle.closest('td').find('.badge');
+
+            // Disable toggle during request
+            toggle.prop('disabled', true);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: `/post/${postId}/toggle-published`,
+                success: function(response) {
+                    if (response.status == 1) {
+                        // Update badge
+                        if (response.is_published) {
+                            badge.removeClass('badge-warning').addClass('badge-primary').text('Published');
+                        } else {
+                            badge.removeClass('badge-primary').addClass('badge-warning').text('Unpublished');
+                        }
+                        toastr.success(response.msg);
+                    } else {
+                        // Revert toggle state
+                        toggle.prop('checked', !isChecked);
+                        toastr.error(response.msg);
+                    }
+                },
+                error: function(xhr) {
+                    // Revert toggle state
+                    toggle.prop('checked', !isChecked);
+                    toastr.error('Something went wrong. Please try again!');
+                },
+                complete: function() {
+                    // Re-enable toggle
+                    toggle.prop('disabled', false);
+                }
+            });
+        });
+
         // Auto-filter functionality
         let filterTimeout;
 

@@ -66,120 +66,76 @@
         }
     </style>
 @endpush
-
 @section('contents')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ __('Create New Post') }}</h1>
+                    <h1>{{ __('Create New Category') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('post.index') }}">{{ __('Posts') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('category.index') }}">{{ __('Category') }}</a></li>
                         <li class="breadcrumb-item active">{{ __('Create') }}</li>
                     </ol>
                 </div>
             </div>
         </div>
     </section>
-
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ __('Post Information') }}</h3>
+                            <h3 class="card-title">{{ __('Category Information') }}</h3>
                         </div>
                         <div class="card-body">
-                            <form class="form-material form-horizontal" action="{{ route('post.store') }}" method="POST">
+                            <form class="form-material form-horizontal" action="{{ route('category.store') }}"
+                                method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-8">
-                                        <div class="form-group">
-                                            <label for="title">{{ __('Post Title') }} <span class="text-danger">*</span></label>
-                                            <input type="text" id="title" name="title"
-                                                class="form-control @error('title') is-invalid @enderror"
-                                                placeholder="{{ __('Enter post title') }}" 
-                                                value="{{ old('title') }}"
-                                                onkeyup="generateSlug()">
-                                            @error('title')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="slug">{{ __('Slug') }}</label>
-                                            <input type="text" id="slug" name="slug"
-                                                class="form-control @error('slug') is-invalid @enderror"
-                                                placeholder="{{ __('Auto-generated from title or enter custom') }}"
-                                                value="{{ old('slug') }}">
-                                            @error('slug')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                            <small class="form-text text-muted">{{ __('Leave empty to auto-generate from title') }}</small>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="content">{{ __('Content') }} <span class="text-danger">*</span></label>
-                                            <textarea id="content" name="content"
-                                                class="form-control content-editor @error('content') is-invalid @enderror"
-                                                placeholder="{{ __('Write your post content here...') }}"
-                                                rows="8">{{ old('content') }}</textarea>
-                                            @error('content')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="name">{{ __('Category Title') }} <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" id="name" name="name"
+                                            class="form-control @error('name') is-invalid @enderror"
+                                            placeholder="{{ __('Enter category name') }}" value="{{ old('name') }}"
+                                            onkeyup="generateSlug()">
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
-
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="card-title">{{ __('Post Settings') }}</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="form-group">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <label for="is_active">{{ __('Active Status') }}</label>
-                                                        <label class="switch">
-                                                            <input type="checkbox" id="is_active" name="is_active" value="1" 
-                                                                {{ old('is_active') ? 'checked' : 'checked' }}>
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    </div>
-                                                    <small class="form-text text-muted">{{ __('Enable/disable this post') }}</small>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <label for="is_published">{{ __('Published Status') }}</label>
-                                                        <label class="switch">
-                                                            <input type="checkbox" id="is_published" name="is_published" value="1"
-                                                                {{ old('is_published') ? 'checked' : '' }}>
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    </div>
-                                                    <small class="form-text text-muted">{{ __('Publish this post publicly') }}</small>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                                <i class="fas fa-save"></i> {{ __('Create Post') }}
-                                            </button>
-                                            <a href="{{ route('post.index') }}" class="btn btn-secondary btn-lg btn-block">
-                                                <i class="fas fa-times"></i> {{ __('Cancel') }}
-                                            </a>
-                                        </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="slug">{{ __('Slug') }}</label>
+                                        <input type="text" id="slug" name="slug"
+                                            class="form-control @error('slug') is-invalid @enderror"
+                                            placeholder="{{ __('Auto-generated from name or enter custom') }}"
+                                            value="{{ old('slug') }}">
+                                        @error('slug')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <small
+                                            class="form-text text-muted">{{ __('Leave empty to auto-generate from name') }}</small>
                                     </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label for="description">{{ __('Description') }} <span
+                                                class="text-danger">*</span></label>
+                                        <textarea id="description" name="description"
+                                            class="form-control content-editor @error('description') is-invalid @enderror"
+                                            placeholder="{{ __('Write your category description here...') }}" rows="8">{{ old('description') }}</textarea>
+                                        @error('description')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3 text-right">
+                                    <a href="{{ route('category.index') }}" class="btn btn-secondary">
+                                        <i class="fas fa-times"></i> {{ __('Cancel') }}
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> {{ __('Create Category') }}
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -190,7 +146,7 @@
     </section>
 @endsection
 
-@push('js')
+{{-- @push('js')
     <script>
         function generateSlug() {
             const title = document.getElementById('title').value;
@@ -199,7 +155,7 @@
                 .replace(/\s+/g, '-') // Replace spaces with -
                 .replace(/-+/g, '-') // Replace multiple - with single -
                 .trim('-'); // Trim - from start and end
-            
+
             document.getElementById('slug').value = slug;
         }
 
@@ -220,4 +176,4 @@
             });
         });
     </script>
-@endpush
+@endpush --}}
