@@ -275,5 +275,17 @@
         $('#statusFilter, #publishedFilter').on('change', function() {
             performFilter();
         });
+        
+        let slugEdited = false;
+
+        document.getElementById('slug').addEventListener('input', function() {
+            slugEdited = true; // User typed manually
+        });
+
+        document.getElementById('name').addEventListener('input', function() {
+            if (!slugEdited) {
+                document.getElementById('slug').value = this.value;
+            }
+        });
     </script>
 @endpush
