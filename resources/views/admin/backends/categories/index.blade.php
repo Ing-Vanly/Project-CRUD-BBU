@@ -1,5 +1,4 @@
 @extends('admin.layouts.app')
-
 @push('css')
     <style>
         .switch {
@@ -92,20 +91,18 @@
         }
     </style>
 @endpush
-
 @section('contents')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3>{{ __('Posts') }}</h3>
+                    <h3>{{ __('Categories') }}</h3>
                 </div>
                 <div class="col-sm-6" style="text-align: right">
                 </div>
             </div>
         </div>
     </section>
-
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -114,16 +111,16 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6 col-xs-6 col-sm-6">
-                                    <h3 class="card-title">{{ __('Post Management') }}</h3>
+                                    <h3 class="card-title">{{ __('Category Management') }}</h3>
                                 </div>
                                 <div class="col-6 col-xs-6 col-sm-6">
-                                    <a class="btn btn-primary float-right" href="{{ route('post.create') }}">
+                                    <a class="btn btn-primary float-right" href="{{ route('category.create') }}">
                                         <i class=" fa fa-plus-circle"></i>
-                                        {{ __('Add New Post') }}
+                                        {{ __('Add New Category') }}
                                     </a>
                                 </div>
                             </div>
-                            
+
                             <!-- Filter Form -->
                             <div class="row mt-3">
                                 <div class="col-md-4">
@@ -153,7 +150,7 @@
                         </div>
 
                         <div class="position-relative" id="table-container">
-                            @include('admin.backends.post.table')
+                            @include('admin.backends.categories.table')
                         </div>
                     </div>
                 </div>

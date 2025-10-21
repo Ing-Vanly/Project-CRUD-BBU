@@ -40,8 +40,10 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{ request()->routeIs('role.*') || request()->routeIs('user.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->routeIs('role.*') || request()->routeIs('user.*') ? 'active' : '' }}">
+                <li
+                    class="nav-item {{ request()->routeIs('role.*') || request()->routeIs('user.*') ? 'menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ request()->routeIs('role.*') || request()->routeIs('user.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             Manage Users
@@ -50,7 +52,8 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
+                            <a href="{{ route('user.index') }}"
+                                class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
                                 <i class="fas fa-table nav-icon"></i>
                                 <p>Table Users</p>
                             </a>
@@ -75,19 +78,56 @@
                     <a href="#" class="nav-link {{ request()->routeIs('post.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>
+                            Manage Products
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('category.index')}}" class="nav-link {{ request()->routeIs('post.index') ? 'active' : '' }}">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->routeIs('post.create') ? 'active' : '' }}">
+                                <i class="fas fa-plus-circle nav-icon"></i>
+                                <p>Unit</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->routeIs('post.create') ? 'active' : '' }}">
+                                <i class="fas fa-plus-circle nav-icon"></i>
+                                <p>Brand</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->routeIs('post.create') ? 'active' : '' }}">
+                                <i class="fas fa-plus-circle nav-icon"></i>
+                                <p>Product</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item {{ request()->routeIs('post.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('post.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
                             Manage Posts
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('post.index') }}" class="nav-link {{ request()->routeIs('post.index') ? 'active' : '' }}">
+                            <a href="{{ route('post.index') }}"
+                                class="nav-link {{ request()->routeIs('post.index') ? 'active' : '' }}">
                                 <i class="fas fa-list nav-icon"></i>
                                 <p>All Posts</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('post.create') }}" class="nav-link {{ request()->routeIs('post.create') ? 'active' : '' }}">
+                            <a href="{{ route('post.create') }}"
+                                class="nav-link {{ request()->routeIs('post.create') ? 'active' : '' }}">
                                 <i class="fas fa-plus-circle nav-icon"></i>
                                 <p>Create Post</p>
                             </a>

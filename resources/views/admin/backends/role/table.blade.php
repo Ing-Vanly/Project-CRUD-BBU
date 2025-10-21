@@ -16,15 +16,12 @@
                         <a href="{{ route('role.edit', $role->id) }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-pencil-alt"></i> {{ __('Edit') }}
                         </a>
-                        <form action="{{ route('role.destroy', $role->id) }}"
-                              method="POST"
-                              class="d-inline-block form-delete-{{ $role->id }}">
+                        <form action="{{ route('role.destroy', $role->id) }}" method="POST"
+                            class="d-inline-block form-delete-{{ $role->id }}">
                             @csrf
                             @method('DELETE')
-                            <button type="button"
-                                    class="btn btn-danger btn-sm btn-delete"
-                                    data-id="{{ $role->id }}"
-                                    data-href="{{ route('role.destroy', $role->id) }}">
+                            <button type="button" class="btn btn-danger btn-sm btn-delete"
+                                data-id="{{ $role->id }}" data-href="{{ route('role.destroy', $role->id) }}">
                                 <i class="fas fa-trash-alt"></i> {{ __('Delete') }}
                             </button>
                         </form>

@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            @if($posts->count() > 0)
+            {{-- @if ($posts->count() > 0)
                 @foreach ($posts as $post)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
@@ -83,38 +83,32 @@
                         </div>
                     </td>
                 </tr>
-            @endif
-</tbody>
-</table>
-
-@if($posts->count() > 0)
-    <div class="row align-items-center">
-        <div class="col-sm-6 pl-4 my-2">
-            {{ __('Showing') }} {{ $posts->firstItem() }} {{ __('to') }} {{ $posts->lastItem() }}
-            {{ __('of') }} {{ $posts->total() }} {{ __('entries') }}
-        </div>
-        <div class="col-sm-6 d-flex justify-content-end pr-4 my-2">
-            <nav aria-label="Page navigation">
-                <ul class="pagination mb-0">
-                    {{-- Previous Page Link --}}
-                    <li class="page-item {{ $posts->onFirstPage() ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $posts->previousPageUrl() ?? '#' }}">{{ __('Previous') }}</a>
-                    </li>
-
-                    {{-- Pagination Elements --}}
-                    @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
-                        <li class="page-item {{ $page == $posts->currentPage() ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+            @endif --}}
+        </tbody>
+    </table>
+    {{-- @if ($posts->count() > 0)
+        <div class="row align-items-center">
+            <div class="col-sm-6 pl-4 my-2">
+                {{ __('Showing') }} {{ $posts->firstItem() }} {{ __('to') }} {{ $posts->lastItem() }}
+                {{ __('of') }} {{ $posts->total() }} {{ __('entries') }}
+            </div>
+            <div class="col-sm-6 d-flex justify-content-end pr-4 my-2">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination mb-0">
+                        <li class="page-item {{ $posts->onFirstPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $posts->previousPageUrl() ?? '#' }}">{{ __('Previous') }}</a>
                         </li>
-                    @endforeach
-
-                    {{-- Next Page Link --}}
-                    <li class="page-item {{ !$posts->hasMorePages() ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $posts->nextPageUrl() ?? '#' }}">{{ __('Next') }}</a>
-                    </li>
-                </ul>
-            </nav>
+                        @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $posts->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+                        <li class="page-item {{ !$posts->hasMorePages() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $posts->nextPageUrl() ?? '#' }}">{{ __('Next') }}</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
-@endif
+    @endif --}}
 </div>

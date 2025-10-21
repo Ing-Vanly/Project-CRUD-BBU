@@ -34,7 +34,6 @@
                                 </div>
                             </div>
                         </div>
-
                         @include('admin.backends.role.table')
                     </div>
                 </div>
