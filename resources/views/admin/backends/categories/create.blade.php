@@ -119,8 +119,7 @@
                                             class="form-text text-muted">{{ __('Leave empty to auto-generate from name') }}</small>
                                     </div>
                                     <div class="col-md-12 mb-3">
-                                        <label for="description">{{ __('Description') }} <span
-                                                class="text-danger">*</span></label>
+                                        <label for="description">{{ __('Description') }}</label>
                                         <textarea id="description" name="description"
                                             class="form-control content-editor @error('description') is-invalid @enderror"
                                             placeholder="{{ __('Write your category description here...') }}" rows="8">{{ old('description') }}</textarea>
@@ -146,11 +145,11 @@
     </section>
 @endsection
 
-{{-- @push('js')
+@push('js')
     <script>
         function generateSlug() {
-            const title = document.getElementById('title').value;
-            const slug = title.toLowerCase()
+            const name = document.getElementById('name').value;
+            const slug = name.toLowerCase()
                 .replace(/[^a-z0-9 -]/g, '') // Remove invalid chars
                 .replace(/\s+/g, '-') // Replace spaces with -
                 .replace(/-+/g, '-') // Replace multiple - with single -
@@ -158,22 +157,5 @@
 
             document.getElementById('slug').value = slug;
         }
-
-        // Initialize Summernote editor for better content editing
-        $(document).ready(function() {
-            $('#content').summernote({
-                height: 300,
-                placeholder: '{{ __("Write your post content here...") }}',
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            });
-        });
     </script>
-@endpush --}}
+@endpush

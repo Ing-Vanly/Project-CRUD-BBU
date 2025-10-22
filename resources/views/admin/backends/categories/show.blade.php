@@ -2,10 +2,10 @@
 
 @push('css')
     <style>
-        .post-content {
+        .category-content {
             line-height: 1.6;
         }
-        .post-meta {
+        .category-meta {
             border-left: 4px solid #007bff;
             padding-left: 15px;
             background-color: #f8f9fa;
@@ -18,11 +18,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ __('View Post') }}</h1>
+                    <h1>{{ __('View Category') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('post.index') }}">{{ __('Posts') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('category.index') }}">{{ __('Category') }}</a></li>
                         <li class="breadcrumb-item active">{{ __('View') }}</li>
                     </ol>
                 </div>
@@ -36,18 +36,19 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ $post->title }}</h3>
+                            <h3 class="card-title">{{ $category->name }}</h3>
                             <div class="card-tools">
                                 <div class="btn-group">
-                                    <a href="{{ route('post.index') }}" class="btn btn-sm btn-secondary">
+                                    <a href="{{ route('category.index') }}" class="btn btn-sm btn-secondary">
                                         <i class="fas fa-arrow-left"></i> {{ __('Back') }}
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="post-content">
-                                {!! $post->content !!}
+                            <div class="category-content">
+                                <h5>{{ __('Description') }}</h5>
+                                <p>{{ $category->description ?? __('No description available') }}</p>
                             </div>
                         </div>
                     </div>
@@ -56,45 +57,22 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ __('Post Information') }}</h3>
+                            <h3 class="card-title">{{ __('Category Information') }}</h3>
                         </div>
-                        <div class="card-body post-meta">
-                            <div class="mb-3">
-                                <strong>{{ __('Status:') }}</strong>
-                                @if($post->is_active)
-                                    <span class="badge badge-success ml-2">{{ __('Active') }}</span>
-                                @else
-                                    <span class="badge badge-secondary ml-2">{{ __('Inactive') }}</span>
-                                @endif
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ __('Published:') }}</strong>
-                                @if($post->is_published)
-                                    <span class="badge badge-primary ml-2">{{ __('Published') }}</span>
-                                @else
-                                    <span class="badge badge-warning ml-2">{{ __('Draft') }}</span>
-                                @endif
-                            </div>
-
+                        <div class="card-body category-meta">
                             <div class="mb-3">
                                 <strong>{{ __('Slug:') }}</strong>
-                                <span class="text-muted">{{ $post->slug }}</span>
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ __('Author:') }}</strong>
-                                <span>{{ $post->user ? $post->user->name : __('Unknown') }}</span>
+                                <span class="text-muted">{{ $category->slug }}</span>
                             </div>
 
                             <div class="mb-3">
                                 <strong>{{ __('Created:') }}</strong>
-                                <span class="text-muted">{{ $post->created_at->format('M d, Y \a\t H:i') }}</span>
+                                <span class="text-muted">{{ $category->created_at->format('M d, Y \a\t H:i') }}</span>
                             </div>
 
                             <div class="mb-3">
                                 <strong>{{ __('Last Updated:') }}</strong>
-                                <span class="text-muted">{{ $post->updated_at->format('M d, Y \a\t H:i') }}</span>
+                                <span class="text-muted">{{ $category->updated_at->format('M d, Y \a\t H:i') }}</span>
                             </div>
                         </div>
                     </div>
@@ -104,14 +82,14 @@
                             <h3 class="card-title">{{ __('Actions') }}</h3>
                         </div>
                         <div class="card-body">
-                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary btn-block">
-                                <i class="fas fa-edit"></i> {{ __('Edit Post') }}
+                            <a href="{{ route('category.edit', $category->id) }}" class="btn btn-primary btn-block">
+                                <i class="fas fa-edit"></i> {{ __('Edit Category') }}
                             </a>
-                            <form action="{{ route('post.destroy', $post->id) }}" method="POST" class="mt-2">
+                            <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="mt-2">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-danger btn-block btn-delete" data-id="{{ $post->id }}">
-                                    <i class="fas fa-trash"></i> {{ __('Delete Post') }}
+                                <button type="button" class="btn btn-danger btn-block btn-delete" data-id="{{ $category->id }}">
+                                    <i class="fas fa-trash"></i> {{ __('Delete Category') }}
                                 </button>
                             </form>
                         </div>

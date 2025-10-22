@@ -5,15 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::latest()->get();
+        $query = Category::query();
+
+        // Search by name
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter by created date
+        if ($request->has('created') && $request->created !== '') {
+            $query->whereDate('created_at', $request->created);
+        }
+
+        $categories = $query->latest()->paginate(10);
+
+        // Return only the table view for AJAX requests
+        if ($request->ajax()) {
+            $view = view('admin.backends.categories.table', compact('categories'))->render();
+            return response()->json(['view' => $view]);
+        }
+
         return view('admin.backends.categories.index', compact('categories'));
     }
 
@@ -46,7 +66,7 @@ class CategoryController extends Controller
             $category->description = $request->description;
             $category->save();
             DB::commit();
-            return redirect()->route('categories.index')->with(['success' => true, 'msg' => __('Post Created Successfully!')]);
+            return redirect()->route('category.index')->with(['success' => true, 'msg' => __('Category Created Successfully!')]);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with(['success' => false, 'msg' => __('Something went wrong!') . $e->getMessage()]);
@@ -58,7 +78,8 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        return view('admin.backends.categories.show');
+        $category = Category::findOrFail($id);
+        return view('admin.backends.categories.show', compact('category'));
     }
 
     /**
@@ -66,7 +87,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.backends.categories.edit');
+        $category = Category::findOrFail($id);
+        return view('admin.backends.categories.edit', compact('category'));
     }
 
     /**
@@ -88,7 +110,7 @@ class CategoryController extends Controller
             $category->description = $request->description;
             $category->save();
             DB::commit();
-            return redirect()->route('categories.index')->with(['success' => true, 'msg' => __('Category Updated Successfully!')]);
+            return redirect()->route('category.index')->with(['success' => true, 'msg' => __('Category Updated Successfully!')]);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with(['success' => false, 'msg' => __('Something went wrong!') . $e->getMessage()]);
@@ -102,11 +124,11 @@ class CategoryController extends Controller
     {
         try {
             DB::beginTransaction();
-            $category = Category::findOrFaill($id);
+            $category = Category::findOrFail($id);
             $category->delete();
 
-            $categorys = Category::with('user')->latest('id')->paginate(10);
-            $view = view('admin.backends.categories.table', compact('categorys'))->render();
+            $categories = Category::latest('id')->paginate(10);
+            $view = view('admin.backends.categories.table', compact('categories'))->render();
             DB::commit();
             $output = [
                 'status' => 1,

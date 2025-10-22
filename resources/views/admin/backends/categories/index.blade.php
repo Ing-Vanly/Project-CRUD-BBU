@@ -128,32 +128,16 @@
 
                             <!-- Filter Form -->
                             <div class="row mt-3">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group mb-0">
                                         <input type="text" class="form-control" id="searchFilter"
-                                            placeholder="{{ __('Search by title...') }}" value="{{ request('search') }}">
+                                            placeholder="{{ __('Search by name...') }}" value="{{ request('search') }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group mb-0">
-                                        <select class="form-control" id="statusFilter">
-                                            <option value="">{{ __('All Status') }}</option>
-                                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>
-                                                {{ __('Active') }}</option>
-                                            <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>
-                                                {{ __('Inactive') }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group mb-0">
-                                        <select class="form-control" id="publishedFilter">
-                                            <option value="">{{ __('All Published') }}</option>
-                                            <option value="1" {{ request('published') == '1' ? 'selected' : '' }}>
-                                                {{ __('Published') }}</option>
-                                            <option value="0" {{ request('published') == '0' ? 'selected' : '' }}>
-                                                {{ __('Unpublished') }}</option>
-                                        </select>
+                                        <input type="date" class="form-control" id="createdFilter"
+                                            placeholder="{{ __('Filter by created date') }}" value="{{ request('created') }}">
                                     </div>
                                 </div>
                             </div>
@@ -220,16 +204,14 @@
 
         function performFilter() {
             const search = $('#searchFilter').val();
-            const status = $('#statusFilter').val();
-            const published = $('#publishedFilter').val();
+            const created = $('#createdFilter').val();
 
             $.ajax({
                 type: "GET",
-                url: "{{ route('post.index') }}",
+                url: "{{ route('category.index') }}",
                 data: {
                     search: search,
-                    status: status,
-                    published: published
+                    created: created
                 },
                 beforeSend: function() {
                     showLoadingOverlay();
@@ -271,8 +253,8 @@
             }, 500);
         });
 
-        // Status and Published dropdowns - immediate filter
-        $('#statusFilter, #publishedFilter').on('change', function() {
+        // Created date filter - immediate filter
+        $('#createdFilter').on('change', function() {
             performFilter();
         });
         
