@@ -118,7 +118,7 @@ class PostController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, string $id)
     {
         try {
             DB::beginTransaction();
@@ -127,31 +127,39 @@ class PostController extends Controller
             DB::commit();
 
             // For AJAX requests (from table)
-            if (request()->ajax()) {
+            if ($request->ajax()) {
+                $posts = Post::with('user')->latest('id')->paginate(10);
+                $view = view('admin.backends.post.table', compact('posts'))->render();
                 $output = [
                     'status' => 1,
+                    'view' => $view,
                     'msg' => __('Post Deleted successfully.')
                 ];
                 return response()->json($output);
             }
 
-            $posts = Post::with('user')->latest('id')->paginate(10);
-            $view = view('admin.backends.post.table', compact('posts'))->render();
-            DB::commit();
-            $output = [
-                'status' => 1,
-                'view' => $view,
+            // For regular form submit (from show page)
+            return redirect()->route('post.index')->with([
+                'success' => true,
                 'msg' => __('Post Deleted successfully.')
-            ];
-        } catch (Exception $e) {
+            ]);
+        } catch (\Exception $e) {
             DB::rollBack();
-            $output = [
-                'status' => 0,
-                'msg' => __('Something went wrong')
-            ];
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'status' => 0,
+                    'msg' => __('Something went wrong')
+                ]);
+            }
+
+            return redirect()->back()->with([
+                'success' => false,
+                'msg' => __('Something went wrong!')
+            ]);
         }
-        return response()->json($output);
     }
+
 
     public function togglePublished($id)
     {
