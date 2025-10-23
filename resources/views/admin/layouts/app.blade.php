@@ -39,13 +39,38 @@
 
     @stack('css')
     <style>
+        /* Main menu active styling */
         .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active,
         .sidebar-dark-primary .nav-sidebar>.nav-item.menu-open>.nav-link {
-            background-color: #000000 !important;
+            background-color: transparent !important;
+            color: #ffffff !important;
+            border-left: 3px solid #ffffff !important;
+            padding-left: 22px !important;
         }
 
+        /* Submenu active styling */
         .sidebar-dark-primary .nav-sidebar .nav-treeview>.nav-item>.nav-link.active {
-            background-color: #ffffff !important;
+            background-color: transparent !important;
+            color: #ffffff !important;
+            padding-left: 28px !important;
+        }
+
+        /* Hover effects */
+        .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link:hover,
+        .sidebar-dark-primary .nav-sidebar .nav-treeview>.nav-item>.nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+        }
+
+        /* Icon styling for active items */
+        .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active .nav-icon,
+        .sidebar-dark-primary .nav-sidebar .nav-treeview>.nav-item>.nav-link.active .nav-icon {
+            /* color: #000000 !important; */
+        }
+
+        /* Remove default active background */
+        .sidebar-dark-primary .nav-sidebar .nav-link.active {
+            background-color: transparent !important;
         }
     </style>
 </head>

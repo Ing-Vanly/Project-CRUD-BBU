@@ -86,8 +86,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 @endpush
@@ -96,7 +101,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3>{{ __('Categories') }}</h3>
+                    <h3>{{ __('Brands') }}</h3>
                 </div>
                 <div class="col-sm-6" style="text-align: right">
                 </div>
@@ -111,46 +116,36 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6 col-xs-6 col-sm-6">
-                                    <h3 class="card-title">{{ __('Category Management') }}</h3>
+                                    <h3 class="card-title">{{ __('Brand Management') }}</h3>
                                 </div>
                                 <div class="col-6 col-xs-6 col-sm-6">
-                                    <a class="btn btn-primary float-right" href="{{ route('category.create') }}">
+                                    <a class="btn btn-primary float-right" href="{{ route('brand.create') }}">
                                         <i class=" fa fa-plus-circle"></i>
-                                        {{ __('Add New Category') }}
+                                        {{ __('Add New Brand') }}
                                     </a>
                                 </div>
                             </div>
 
                             <!-- Filter Form -->
                             <div class="row mt-3">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group mb-0">
-                                        <input type="text" class="form-control" id="searchFilter" placeholder="{{ __('Search by title...') }}" value="{{ request('search') }}">
+                                        <input type="text" class="form-control" id="searchFilter"
+                                            placeholder="{{ __('Search by name...') }}" value="{{ request('search') }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group mb-0">
-                                        <select class="form-control" id="statusFilter">
-                                            <option value="">{{ __('All Status') }}</option>
-                                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>{{ __('Active') }}</option>
-                                            <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>{{ __('Inactive') }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group mb-0">
-                                        <select class="form-control" id="publishedFilter">
-                                            <option value="">{{ __('All Published') }}</option>
-                                            <option value="1" {{ request('published') == '1' ? 'selected' : '' }}>{{ __('Published') }}</option>
-                                            <option value="0" {{ request('published') == '0' ? 'selected' : '' }}>{{ __('Unpublished') }}</option>
-                                        </select>
+                                        <input type="date" class="form-control" id="createdFilter"
+                                            placeholder="{{ __('Filter by created date') }}"
+                                            value="{{ request('created') }}">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="position-relative" id="table-container">
-                            @include('admin.backends.categories.table')
+                            @include('admin.backends.brand.table')
                         </div>
                     </div>
                 </div>
@@ -205,68 +200,19 @@
                 }
             });
         });
-
-        // Handle published status toggle
-        $(document).on('change', '.toggle-published', function() {
-            const postId = $(this).data('id');
-            const isChecked = $(this).is(':checked');
-            const toggle = $(this);
-            const badge = toggle.closest('td').find('.badge');
-
-            // Disable toggle during request
-            toggle.prop('disabled', true);
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                type: "POST",
-                url: `/post/${postId}/toggle-published`,
-                success: function(response) {
-                    if (response.status == 1) {
-                        // Update badge
-                        if (response.is_published) {
-                            badge.removeClass('badge-warning').addClass('badge-primary').text('Published');
-                        } else {
-                            badge.removeClass('badge-primary').addClass('badge-warning').text('Unpublished');
-                        }
-                        toastr.success(response.msg);
-                    } else {
-                        // Revert toggle state
-                        toggle.prop('checked', !isChecked);
-                        toastr.error(response.msg);
-                    }
-                },
-                error: function(xhr) {
-                    // Revert toggle state
-                    toggle.prop('checked', !isChecked);
-                    toastr.error('Something went wrong. Please try again!');
-                },
-                complete: function() {
-                    // Re-enable toggle
-                    toggle.prop('disabled', false);
-                }
-            });
-        });
-
         // Auto-filter functionality
         let filterTimeout;
 
         function performFilter() {
             const search = $('#searchFilter').val();
-            const status = $('#statusFilter').val();
-            const published = $('#publishedFilter').val();
+            const created = $('#createdFilter').val();
 
             $.ajax({
                 type: "GET",
-                url: "{{ route('post.index') }}",
+                url: "{{ route('brand.index') }}",
                 data: {
                     search: search,
-                    status: status,
-                    published: published
+                    created: created
                 },
                 beforeSend: function() {
                     showLoadingOverlay();
@@ -308,9 +254,21 @@
             }, 500);
         });
 
-        // Status and Published dropdowns - immediate filter
-        $('#statusFilter, #publishedFilter').on('change', function() {
+        // Created date filter - immediate filter
+        $('#createdFilter').on('change', function() {
             performFilter();
+        });
+
+        let slugEdited = false;
+
+        document.getElementById('slug').addEventListener('input', function() {
+            slugEdited = true; // User typed manually
+        });
+
+        document.getElementById('name').addEventListener('input', function() {
+            if (!slugEdited) {
+                document.getElementById('slug').value = this.value;
+            }
         });
     </script>
 @endpush
