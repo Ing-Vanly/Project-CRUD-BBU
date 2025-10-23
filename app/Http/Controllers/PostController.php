@@ -124,6 +124,16 @@ class PostController extends Controller
             DB::beginTransaction();
             $post = Post::findOrFail($id);
             $post->delete();
+            DB::commit();
+
+            // For AJAX requests (from table)
+            if (request()->ajax()) {
+                $output = [
+                    'status' => 1,
+                    'msg' => __('Post Deleted successfully.')
+                ];
+                return response()->json($output);
+            }
 
             $posts = Post::with('user')->latest('id')->paginate(10);
             $view = view('admin.backends.post.table', compact('posts'))->render();

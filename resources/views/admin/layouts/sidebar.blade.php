@@ -90,8 +90,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link {{ request()->routeIs('post.create') ? 'active' : '' }}">
-                                <i class="fas fa-plus-circle nav-icon"></i>
+                            <a href="{{ route('unit.index') }}" class="nav-link {{ request()->routeIs('unit.*') ? 'active' : '' }}">
+                                <i class="fas fa-list nav-icon"></i>
                                 <p>Unit</p>
                             </a>
                         </li>

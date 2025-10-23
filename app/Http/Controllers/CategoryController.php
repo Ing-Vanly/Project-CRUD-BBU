@@ -120,28 +120,39 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         try {
             DB::beginTransaction();
             $category = Category::findOrFail($id);
             $category->delete();
-
-            $categories = Category::latest('id')->paginate(10);
-            $view = view('admin.backends.categories.table', compact('categories'))->render();
             DB::commit();
-            $output = [
-                'status' => 1,
-                'view' => $view,
-                'msg' => __('Category Deleted successfully.')
-            ];
+
+            // For AJAX requests (from table)
+            if ($request->ajax()) {
+                $categories = Category::latest('id')->paginate(10);
+                $view = view('admin.backends.categories.table', compact('categories'))->render();
+                $output = [
+                    'status' => 1,
+                    'view' => $view,
+                    'msg' => __('Category Deleted successfully.')
+                ];
+                return response()->json($output);
+            }
+
+            // For regular form submit (from show page)
+            return redirect()->route('category.index')->with(['success' => true, 'msg' => __('Category Deleted successfully.')]);
         } catch (\Exception $e) {
             DB::rollBack();
-            $output = [
-                'status' => 0,
-                'msg' => __('Something went wrong')
-            ];
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'status' => 0,
+                    'msg' => __('Something went wrong')
+                ]);
+            }
+
+            return redirect()->back()->with(['success' => false, 'msg' => __('Something went wrong!')]);
         }
-        return response()->json($output);
     }
 }
