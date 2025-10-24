@@ -66,29 +66,38 @@
     <section class="content">
         <div class="container-fluid">
             <div class="mb-4">
-                <h2 class="mb-1">{{ $brand->name }}</h2>
-                <p class="text-muted">Brand Details</p>
+                <h2 class="mb-1">{{ $product->name }}</h2>
+                <p class="text-muted">Product Details</p>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
                     <div class="detail-card">
                         <h5 class="section-title">
-                            <i class="fas fa-tag"></i> Basic Information
+                            <i class="fas fa-box"></i> Basic Information
                         </h5>
 
                         <div class="field-label">Name</div>
-                        <div class="field-value">{{ $brand->name }}</div>
+                        <div class="field-value">{{ $product->name }}</div>
 
-                        <div class="field-label">Business ID</div>
+                        <div class="field-label">Price</div>
+                        <div class="field-value">${{ number_format($product->price, 2) }}</div>
+
+                        <div class="field-label">Stock</div>
+                        <div class="field-value">{{ $product->stock }}</div>
+
+                        <div class="field-label">Status</div>
                         <div class="field-value">
-                            <i class="fas fa-building"></i> {{ $brand->business_id ?? 1 }}
+                            <span class="badge badge-{{ $product->status == 'active' ? 'success' : 'secondary' }}">
+                                {{ ucfirst($product->status) }}
+                            </span>
                         </div>
 
-                        @if($brand->logo)
-                            <div class="field-label">Logo</div>
+                        @if ($product->image)
+                            <div class="field-label">Image</div>
                             <div class="field-value">
-                                <img src="{{ asset($brand->logo) }}" alt="{{ $brand->name }}" style="max-width: 200px; border-radius: 8px;">
+                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
+                                    style="max-width: 200px; border-radius: 8px;">
                             </div>
                         @endif
                     </div>
@@ -99,11 +108,26 @@
                         <h5 class="section-title">
                             <i class="fas fa-align-left"></i> Description
                         </h5>
-                        @if($brand->description)
-                            <p>{{ $brand->description }}</p>
+                        @if ($product->description)
+                            <p>{{ $product->description }}</p>
                         @else
                             <p class="text-muted font-italic">No description provided</p>
                         @endif
+                    </div>
+
+                    <div class="detail-card">
+                        <h5 class="section-title">
+                            <i class="fas fa-tags"></i> Categories & Details
+                        </h5>
+
+                        <div class="field-label">Category</div>
+                        <div class="field-value">{{ $product->category->name ?? 'N/A' }}</div>
+
+                        <div class="field-label">Brand</div>
+                        <div class="field-value">{{ $product->brand->name ?? 'N/A' }}</div>
+
+                        <div class="field-label">Unit</div>
+                        <div class="field-value">{{ $product->unit->name ?? 'N/A' }}</div>
                     </div>
                 </div>
             </div>
@@ -111,27 +135,21 @@
             <div class="metadata-section">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="metadata-title mb-0">Metadata</h5>
-                    <a href="{{ route('brand.index') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left"></i> Back to Brands
+                    <a href="{{ route('product.index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Products
                     </a>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="field-label">Created By</div>
-                        <div class="field-value">
-                            <i class="fas fa-user"></i> admin
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="field-label">Created At</div>
                         <div class="field-value">
-                            <i class="far fa-calendar"></i> {{ $brand->created_at->format('d/m/Y') }}
+                            <i class="far fa-calendar"></i> {{ $product->created_at->format('d/m/Y') }}
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="field-label">Last Updated</div>
                         <div class="field-value">
-                            <i class="far fa-calendar"></i> {{ $brand->updated_at->format('d/m/Y') }}
+                            <i class="far fa-calendar"></i> {{ $product->updated_at->format('d/m/Y') }}
                         </div>
                     </div>
                 </div>

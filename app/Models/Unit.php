@@ -11,4 +11,8 @@ class Unit extends Model
         'slug',
         'description',
     ];
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

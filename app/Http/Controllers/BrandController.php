@@ -41,6 +41,7 @@ class BrandController extends Controller
      */
     public function create()
     {
+        
         return view('admin.backends.brand.create');
     }
 
@@ -57,7 +58,7 @@ class BrandController extends Controller
         ]);
 
         $data = $request->only(['name', 'description']);
-        
+
         // Generate slug if not provided
         $data['slug'] = $request->slug ?: Str::slug($request->name);
 
@@ -105,7 +106,7 @@ class BrandController extends Controller
         ]);
 
         $data = $request->only(['name', 'description']);
-        
+
         // Generate slug if not provided
         $data['slug'] = $request->slug ?: Str::slug($request->name);
 
