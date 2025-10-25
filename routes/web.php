@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BusinessLocationController;
 
 // Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
@@ -24,6 +25,7 @@ Route::resource('/category', CategoryController::class);
 Route::resource('/unit', UnitController::class);
 Route::resource('/brand', BrandController::class);
 Route::resource('/product', ProductController::class);
+Route::resource('/business-location', BusinessLocationController::class);
 // });
 
 // Route::prefix('admin')->group(function () {

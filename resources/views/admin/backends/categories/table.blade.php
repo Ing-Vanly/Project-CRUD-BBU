@@ -1,4 +1,4 @@
-<div class="card-body p-0 table-wrapper">
+    <div class="card-body p-0 table-wrapper">
     <table class="table">
         <thead class="text-uppercase">
             <tr>
