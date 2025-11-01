@@ -10,6 +10,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BusinessLocationController;
+use App\Http\Controllers\BusinessSettingController;
 
 // Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
@@ -26,6 +27,8 @@ Route::resource('/unit', UnitController::class);
 Route::resource('/brand', BrandController::class);
 Route::resource('/product', ProductController::class);
 Route::resource('/business-location', BusinessLocationController::class);
+Route::get('/settings/business', [BusinessSettingController::class, 'edit'])->name('business-setting.edit');
+Route::put('/settings/business', [BusinessSettingController::class, 'update'])->name('business-setting.update');
 // });
 
 // Route::prefix('admin')->group(function () {

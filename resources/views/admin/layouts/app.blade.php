@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>AdminLTE 3 | Dashboard</title>
+    @php($businessName = $appBusinessSetting->name ?? config('app.name', 'Admin Dashboard'))
+    <title>{{ $businessName }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -36,6 +37,10 @@
     {{-- Bootstrat 5 --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    @if ($appBusinessSetting && $appBusinessSetting->favicon)
+        <link rel="icon" type="image/png" href="{{ asset($appBusinessSetting->favicon) }}">
+    @endif
 
     @stack('css')
     <style>

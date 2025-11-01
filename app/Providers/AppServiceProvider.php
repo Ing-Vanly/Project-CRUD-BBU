@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\BusinessSetting;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('*', function ($view) {
+            static $businessSetting;
+            static $resolved = false;
+
+            if (!$resolved) {
+                $resolved = true;
+                $businessSetting = Schema::hasTable('business_settings')
+                    ? BusinessSetting::first()
+                    : null;
+            }
+
+            $view->with('appBusinessSetting', $businessSetting);
+        });
     }
 }

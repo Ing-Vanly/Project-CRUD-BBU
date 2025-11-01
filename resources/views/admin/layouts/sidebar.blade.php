@@ -2,10 +2,13 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ $appBusinessSetting && $appBusinessSetting->logo ? asset($appBusinessSetting->logo) : asset('AdminLTE/dist/img/user2-160x160.jpg') }}"
+                    class="img-circle elevation-2" alt="{{ __('Business logo') }}">
             </div>
             <div class="info">
-                {{-- <a href="#" class="d-block">Alexander Pierce</a> --}}
+                @if ($appBusinessSetting && $appBusinessSetting->name)
+                    <a href="{{ route('dashboard') }}" class="d-block">{{ $appBusinessSetting->name }}</a>
+                @endif
             </div>
         </div>
         <div class="form-inline">
@@ -133,6 +136,13 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('business-setting.edit') }}"
+                        class="nav-link {{ request()->routeIs('business-setting.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>{{ __('Business Settings') }}</p>
+                    </a>
                 </li>
             </ul>
         </nav>

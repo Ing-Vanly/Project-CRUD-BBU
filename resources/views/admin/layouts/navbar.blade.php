@@ -5,7 +5,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
+            <a href="{{ route('dashboard') }}" class="nav-link">{{ __('Home') }}</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Contact</a>
@@ -23,7 +23,7 @@
                         <a href="" class="dropdown-item">
                             <i class="fas fa-user mr-2"></i> {{ __('My Profile') }}
                         </a>
-                        <a href="" class="dropdown-item">
+                        <a href="{{ route('business-setting.edit') }}" class="dropdown-item">
                             <i class="fas fa-sliders-h mr-2"></i> {{ __('System Settings') }}
                         </a>
                         <a id="header-logout" href="" onclick="event.preventDefault()" data-toggle="modal"
