@@ -77,8 +77,10 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{ request()->routeIs('category.*') || request()->routeIs('unit.*') || request()->routeIs('brand.*') || request()->routeIs('product.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->routeIs('category.*') || request()->routeIs('unit.*') || request()->routeIs('brand.*') || request()->routeIs('product.*') ? 'active' : '' }}">
+                <li
+                    class="nav-item {{ request()->routeIs('category.*') || request()->routeIs('unit.*') || request()->routeIs('brand.*') || request()->routeIs('product.*') ? 'menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ request()->routeIs('category.*') || request()->routeIs('unit.*') || request()->routeIs('brand.*') || request()->routeIs('product.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-boxes"></i>
                         <p>
                             Manage Products
@@ -87,25 +89,29 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('category.index')}}" class="nav-link {{ request()->routeIs('category.*') ? 'active' : '' }}">
+                            <a href="{{ route('category.index') }}"
+                                class="nav-link {{ request()->routeIs('category.*') ? 'active' : '' }}">
                                 <i class="fas fa-tags nav-icon"></i>
                                 <p>Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('unit.index') }}" class="nav-link {{ request()->routeIs('unit.*') ? 'active' : '' }}">
+                            <a href="{{ route('unit.index') }}"
+                                class="nav-link {{ request()->routeIs('unit.*') ? 'active' : '' }}">
                                 <i class="fas fa-balance-scale nav-icon"></i>
                                 <p>Unit</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('brand.index') }}" class="nav-link {{ request()->routeIs('brand.*') ? 'active' : '' }}">
+                            <a href="{{ route('brand.index') }}"
+                                class="nav-link {{ request()->routeIs('brand.*') ? 'active' : '' }}">
                                 <i class="fas fa-certificate nav-icon"></i>
                                 <p>Brand</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('product.index') }}" class="nav-link {{ request()->routeIs('product.*') ? 'active' : '' }}">
+                            <a href="{{ route('product.index') }}"
+                                class="nav-link {{ request()->routeIs('product.*') ? 'active' : '' }}">
                                 <i class="fas fa-cube nav-icon"></i>
                                 <p>Product</p>
                             </a>
@@ -133,6 +139,31 @@
                                 class="nav-link {{ request()->routeIs('post.create') ? 'active' : '' }}">
                                 <i class="fas fa-plus-circle nav-icon"></i>
                                 <p>Create Post</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item {{ request()->routeIs('author.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('author.*') ? 'active' : '' }}">
+                        <i class="fas fa-user-tie nav-icon"></i>
+                        <p>
+                            Manage Authors
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('author.create') }}"
+                                class="nav-link {{ request()->routeIs('author.create') || request()->routeIs('author.create') ? 'active' : '' }}">
+                                <i class="fas fa-plus-circle nav-icon"></i>
+                                <p>Add Author</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('author.index') }}"
+                                class="nav-link {{ request()->routeIs('author.index') || request()->routeIs('author.edit') || request()->routeIs('author.show') ? 'active' : '' }}">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Author List</p>
                             </a>
                         </li>
                     </ul>

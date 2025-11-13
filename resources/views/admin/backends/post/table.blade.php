@@ -38,9 +38,9 @@
                                         {{ $post->is_published ? 'checked' : '' }}>
                                     <span class="slider round"></span>
                                 </label>
-                                <span class="badge {{ $post->is_published ? 'badge-primary' : 'badge-warning' }}">
+                                {{-- <span class="badge {{ $post->is_published ? 'badge-primary' : 'badge-warning' }}">
                                     {{ $post->is_published ? 'Published' : 'Unpublished' }}
-                                </span>
+                                </span> --}}
                             </div>
                         </td>
                         <td>{{ $post->created_at->format('M d, Y') }}</td>

@@ -7,10 +7,11 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\BusinessLocationController;
 use App\Http\Controllers\BusinessSettingController;
+use App\Http\Controllers\BusinessLocationController;
 
 // Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
@@ -29,6 +30,7 @@ Route::resource('/product', ProductController::class);
 Route::resource('/business-location', BusinessLocationController::class);
 Route::get('/settings/business', [BusinessSettingController::class, 'edit'])->name('business-setting.edit');
 Route::put('/settings/business', [BusinessSettingController::class, 'update'])->name('business-setting.update');
+Route::resource('author', AuthorController::class);
 // });
 
 // Route::prefix('admin')->group(function () {
