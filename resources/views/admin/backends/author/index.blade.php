@@ -95,7 +95,7 @@
 
 @section('contents')
     <section class="content-header">
-        <div class="container-fluid">
+        {{-- <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h3>{{ __('Authors') }}</h3>
@@ -107,7 +107,7 @@
                     </ol>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </section>
 
     <section class="content">
@@ -142,7 +142,7 @@
                                             <div id="dateRangeTrigger"
                                                 class="date-range-trigger flex-grow-1 flex-md-grow-0"
                                                 role="button" tabindex="0"
-                                                style="min-width: 280px;">
+                                                style="min-width: 570px;">
                                                 <i class="far fa-calendar-alt icon"></i>
                                                 <span id="dateRangeText"
                                                     class="{{ $dateRangeDisplay ? '' : 'text-muted' }}">
@@ -177,18 +177,18 @@
             const confirmation = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success mr-2',
-                    cancelButton: 'btn btn-danger'
+                    cancelButton: 'btn btn-danger mr-2'
                 },
                 buttonsStyling: false
             });
 
             confirmation.fire({
-                title: '{{ __('Are you sure?') }}',
-                text: "{{ __('This action cannot be undone.') }}",
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: '{{ __('Yes, delete it!') }}',
-                cancelButtonText: '{{ __('Cancel') }}',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {

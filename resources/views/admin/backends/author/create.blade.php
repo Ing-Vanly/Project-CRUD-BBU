@@ -2,22 +2,7 @@
 
 @section('contents')
     <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>{{ __('Create Author') }}</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('author.index') }}">{{ __('Authors') }}</a></li>
-                        <li class="breadcrumb-item active">{{ __('Create') }}</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
     </section>
-
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -31,7 +16,8 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="name">{{ __('Full Name') }} <span class="text-danger">*</span></label>
+                                        <label for="name">{{ __('Full Name') }} <span
+                                                class="text-danger">*</span></label>
                                         <input type="text" id="name" name="name"
                                             class="form-control @error('name') is-invalid @enderror"
                                             placeholder="{{ __('Enter author name') }}" value="{{ old('name') }}">
@@ -40,7 +26,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="email">{{ __('Email Address') }} <span class="text-danger">*</span></label>
+                                        <label for="email">{{ __('Email Address') }} <span
+                                                class="text-danger">*</span></label>
                                         <input type="email" id="email" name="email"
                                             class="form-control @error('email') is-invalid @enderror"
                                             placeholder="{{ __('Enter author email') }}" value="{{ old('email') }}">
@@ -69,7 +56,7 @@
                                 </div>
 
                                 <div class="form-group mt-3 text-right">
-                                    <a href="{{ route('author.index') }}" class="btn btn-secondary mr-2">
+                                    <a href="{{ route('author.index') }}" class="btn btn-danger mr-2">
                                         <i class="fas fa-times"></i> {{ __('Cancel') }}
                                     </a>
                                     <button type="submit" class="btn btn-primary">

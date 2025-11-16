@@ -25,9 +25,6 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title mb-0">{{ $author->name }}</h3>
-                            <a href="{{ route('author.index') }}" class="btn btn-sm btn-secondary">
-                                <i class="fas fa-arrow-left mr-1"></i> {{ __('Back') }}
-                            </a>
                         </div>
                         <div class="card-body">
                             <dl class="row mb-0">
@@ -95,18 +92,18 @@
             const confirmation = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success mr-2',
-                    cancelButton: 'btn btn-danger'
+                    cancelButton: 'btn btn-danger mr-2'
                 },
                 buttonsStyling: false
             });
 
             confirmation.fire({
-                title: '{{ __('Are you sure?') }}',
-                text: "{{ __('This action cannot be undone.') }}",
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: '{{ __('Yes, delete it!') }}',
-                cancelButtonText: '{{ __('Cancel') }}',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
