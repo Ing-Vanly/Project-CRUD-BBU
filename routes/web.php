@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BusinessSettingController;
 use App\Http\Controllers\BusinessLocationController;
+use App\Http\Controllers\OrderController;
 
 // Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
@@ -27,6 +28,9 @@ Route::resource('/category', CategoryController::class);
 Route::resource('/unit', UnitController::class);
 Route::resource('/brand', BrandController::class);
 Route::resource('/product', ProductController::class);
+Route::get('/order/data/table', [OrderController::class, 'data'])->name('order.data');
+Route::get('/order/export', [OrderController::class, 'export'])->name('order.export');
+Route::resource('/order', OrderController::class);
 Route::resource('/business-location', BusinessLocationController::class);
 Route::get('/settings/business', [BusinessSettingController::class, 'edit'])->name('business-setting.edit');
 Route::put('/settings/business', [BusinessSettingController::class, 'update'])->name('business-setting.update');

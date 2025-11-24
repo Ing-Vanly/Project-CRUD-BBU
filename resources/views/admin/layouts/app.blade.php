@@ -77,6 +77,16 @@
         .sidebar-dark-primary .nav-sidebar .nav-link.active {
             background-color: transparent !important;
         }
+
+        .notifications-icon .badge {
+            min-width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            font-size: 0.65rem;
+            line-height: 20px;
+            padding: 0 4px;
+            transform: translate(45%, -45%);
+        }
     </style>
 </head>
 

@@ -69,40 +69,26 @@
 
 @section('contents')
     <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>{{ __('Edit Post') }}</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('post.index') }}">{{ __('Posts') }}</a></li>
-                        <li class="breadcrumb-item active">{{ __('Edit') }}</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
     </section>
-
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ __('Edit Post Information') }}</h3>
+                            <h3 class="card-title">{{ __('Post Information') }}</h3>
                         </div>
                         <div class="card-body">
                             <form class="form-material form-horizontal" action="{{ route('post.update', $post->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="title">{{ __('Post Title') }} <span class="text-danger">*</span></label>
                                             <input type="text" id="title" name="title"
                                                 class="form-control @error('title') is-invalid @enderror"
-                                                placeholder="{{ __('Enter post title') }}" 
+                                                placeholder="{{ __('Enter post title') }}"
                                                 value="{{ old('title', $post->title) }}"
                                                 onkeyup="generateSlug()">
                                             @error('title')
@@ -111,7 +97,8 @@
                                                 </div>
                                             @enderror
                                         </div>
-
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="slug">{{ __('Slug') }}</label>
                                             <input type="text" id="slug" name="slug"
@@ -123,9 +110,10 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                            <small class="form-text text-muted">{{ __('Leave empty to auto-generate from title') }}</small>
+                                            {{-- <small class="form-text text-muted">{{ __('Leave empty to auto-generate from title') }}</small> --}}
                                         </div>
-
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="content">{{ __('Content') }} <span class="text-danger">*</span></label>
                                             <textarea id="content" name="content"
@@ -139,8 +127,7 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h3 class="card-title">{{ __('Post Settings') }}</h3>
@@ -150,28 +137,26 @@
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <label for="is_active">{{ __('Active Status') }}</label>
                                                         <label class="switch">
-                                                            <input type="checkbox" id="is_active" name="is_active" value="1" 
-                                                                {{ old('is_active', $post->is_active) ? 'checked' : '' }}>
+                                                            <input type="checkbox" id="is_active" name="is_active"
+                                                                value="1" {{ old('is_active', $post->is_active) ? 'checked' : '' }}>
                                                             <span class="slider round"></span>
                                                         </label>
                                                     </div>
                                                     <small class="form-text text-muted">{{ __('Enable/disable this post') }}</small>
                                                 </div>
-
                                                 <div class="form-group">
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <label for="is_published">{{ __('Published Status') }}</label>
                                                         <label class="switch">
-                                                            <input type="checkbox" id="is_published" name="is_published" value="1"
-                                                                {{ old('is_published', $post->is_published) ? 'checked' : '' }}>
+                                                            <input type="checkbox" id="is_published" name="is_published"
+                                                                value="1" {{ old('is_published', $post->is_published) ? 'checked' : '' }}>
                                                             <span class="slider round"></span>
                                                         </label>
                                                     </div>
                                                     <small class="form-text text-muted">{{ __('Publish this post publicly') }}</small>
                                                 </div>
-
                                                 <div class="mt-3">
-                                                    <small class="text-muted">
+                                                    <small class="text-muted d-block">
                                                         <strong>{{ __('Created:') }}</strong> {{ $post->created_at->format('M d, Y H:i') }}<br>
                                                         <strong>{{ __('Updated:') }}</strong> {{ $post->updated_at->format('M d, Y H:i') }}<br>
                                                         <strong>{{ __('Author:') }}</strong> {{ $post->user ? $post->user->name : 'N/A' }}
@@ -179,14 +164,15 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                                <i class="fas fa-save"></i> {{ __('Update Post') }}
-                                            </button>
-                                            <a href="{{ route('post.index') }}" class="btn btn-secondary btn-lg btn-block">
-                                                <i class="fas fa-arrow-left"></i> {{ __('Back to Posts') }}
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group text-right">
+                                            <a href="{{ route('post.index') }}" class="btn outline btn-danger">
+                                                {{ __('Cancel') }}
                                             </a>
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Update Post') }}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

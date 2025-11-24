@@ -78,9 +78,9 @@
                     </ul>
                 </li>
                 <li
-                    class="nav-item {{ request()->routeIs('category.*') || request()->routeIs('unit.*') || request()->routeIs('brand.*') || request()->routeIs('product.*') ? 'menu-open' : '' }}">
+                    class="nav-item {{ request()->routeIs('category.*') || request()->routeIs('unit.*') || request()->routeIs('brand.*') || request()->routeIs('product.*') || request()->routeIs('order.*') ? 'menu-open' : '' }}">
                     <a href="#"
-                        class="nav-link {{ request()->routeIs('category.*') || request()->routeIs('unit.*') || request()->routeIs('brand.*') || request()->routeIs('product.*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->routeIs('category.*') || request()->routeIs('unit.*') || request()->routeIs('brand.*') || request()->routeIs('product.*') || request()->routeIs('order.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-boxes"></i>
                         <p>
                             Manage Products
@@ -114,6 +114,13 @@
                                 class="nav-link {{ request()->routeIs('product.*') ? 'active' : '' }}">
                                 <i class="fas fa-cube nav-icon"></i>
                                 <p>Product</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('order.index') }}"
+                                class="nav-link {{ request()->routeIs('order.*') ? 'active' : '' }}">
+                                <i class="fas fa-clipboard-list nav-icon"></i>
+                                <p>Orders</p>
                             </a>
                         </li>
                     </ul>

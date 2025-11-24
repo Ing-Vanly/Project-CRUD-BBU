@@ -1,5 +1,4 @@
 @extends('admin.layouts.app')
-
 @push('css')
     <style>
         .switch {
@@ -66,24 +65,9 @@
         }
     </style>
 @endpush
-
 @section('contents')
     <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>{{ __('Create New Post') }}</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('post.index') }}">{{ __('Posts') }}</a></li>
-                        <li class="breadcrumb-item active">{{ __('Create') }}</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
     </section>
-
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -96,13 +80,13 @@
                             <form class="form-material form-horizontal" action="{{ route('post.store') }}" method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="title">{{ __('Post Title') }} <span class="text-danger">*</span></label>
+                                            <label for="title">{{ __('Post Title') }} <span
+                                                    class="text-danger">*</span></label>
                                             <input type="text" id="title" name="title"
                                                 class="form-control @error('title') is-invalid @enderror"
-                                                placeholder="{{ __('Enter post title') }}" 
-                                                value="{{ old('title') }}"
+                                                placeholder="{{ __('Enter post title') }}" value="{{ old('title') }}"
                                                 onkeyup="generateSlug()">
                                             @error('title')
                                                 <div class="invalid-feedback">
@@ -110,7 +94,8 @@
                                                 </div>
                                             @enderror
                                         </div>
-
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="slug">{{ __('Slug') }}</label>
                                             <input type="text" id="slug" name="slug"
@@ -122,74 +107,73 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                            <small class="form-text text-muted">{{ __('Leave empty to auto-generate from title') }}</small>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="content">{{ __('Content') }} <span class="text-danger">*</span></label>
-                                            <textarea id="content" name="content"
-                                                class="form-control content-editor @error('content') is-invalid @enderror"
-                                                placeholder="{{ __('Write your post content here...') }}"
-                                                rows="8">{{ old('content') }}</textarea>
-                                            @error('content')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="card-title">{{ __('Post Settings') }}</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="form-group">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <label for="is_active">{{ __('Active Status') }}</label>
-                                                        <label class="switch">
-                                                            <input type="checkbox" id="is_active" name="is_active" value="1" 
-                                                                {{ old('is_active') ? 'checked' : 'checked' }}>
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    </div>
-                                                    <small class="form-text text-muted">{{ __('Enable/disable this post') }}</small>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <label for="is_published">{{ __('Published Status') }}</label>
-                                                        <label class="switch">
-                                                            <input type="checkbox" id="is_published" name="is_published" value="1"
-                                                                {{ old('is_published') ? 'checked' : '' }}>
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    </div>
-                                                    <small class="form-text text-muted">{{ __('Publish this post publicly') }}</small>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                                <i class="fas fa-save"></i> {{ __('Create Post') }}
-                                            </button>
-                                            <a href="{{ route('post.index') }}" class="btn btn-secondary btn-lg btn-block">
-                                                <i class="fas fa-times"></i> {{ __('Cancel') }}
-                                            </a>
+                                            {{-- <small class="form-text text-muted">{{ __('Leave empty to auto-generate from title') }}</small> --}}
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="content">{{ __('Content') }} <span
+                                                class="text-danger">*</span></label>
+                                        <textarea id="content" name="content" class="form-control content-editor @error('content') is-invalid @enderror"
+                                            placeholder="{{ __('Write your post content here...') }}" rows="8">{{ old('content') }}</textarea>
+                                        @error('content')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>​
+                                </div>​
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">{{ __('Post Settings') }}</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <label for="is_active">{{ __('Active Status') }}</label>
+                                                    <label class="switch">
+                                                        <input type="checkbox" id="is_active" name="is_active"
+                                                            value="1" {{ old('is_active') ? 'checked' : 'checked' }}>
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                                <small
+                                                    class="form-text text-muted">{{ __('Enable/disable this post') }}</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <label for="is_published">{{ __('Published Status') }}</label>
+                                                    <label class="switch">
+                                                        <input type="checkbox" id="is_published" name="is_published"
+                                                            value="1" {{ old('is_published') ? 'checked' : '' }}>
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                                <small
+                                                    class="form-text text-muted">{{ __('Publish this post publicly') }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-right">
+                                        <a href="{{ route('post.index') }}" class="btn outline btn-danger">
+                                            {{ __('Cancel') }}
+                                        </a>
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Create Post') }}
+                                        </button>
+                                    </div>
+                                </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </section>
 @endsection
-
 @push('js')
     <script>
         function generateSlug() {
@@ -199,7 +183,7 @@
                 .replace(/\s+/g, '-') // Replace spaces with -
                 .replace(/-+/g, '-') // Replace multiple - with single -
                 .trim('-'); // Trim - from start and end
-            
+
             document.getElementById('slug').value = slug;
         }
 
@@ -207,7 +191,7 @@
         $(document).ready(function() {
             $('#content').summernote({
                 height: 300,
-                placeholder: '{{ __("Write your post content here...") }}',
+                placeholder: '{{ __('Write your post content here...') }}',
                 toolbar: [
                     ['style', ['style']],
                     ['font', ['bold', 'underline', 'clear']],

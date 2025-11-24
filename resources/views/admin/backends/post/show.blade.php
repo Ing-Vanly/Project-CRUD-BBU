@@ -15,105 +15,97 @@
 
 @section('contents')
     <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>{{ __('View Post') }}</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('post.index') }}">{{ __('Posts') }}</a></li>
-                        <li class="breadcrumb-item active">{{ __('View') }}</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
     </section>
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ $post->title }}</h3>
-                            <div class="card-tools">
-                                <div class="btn-group">
-                                    <a href="{{ route('post.index') }}" class="btn btn-sm btn-secondary">
-                                        <i class="fas fa-arrow-left"></i> {{ __('Back') }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="post-content">
-                                {!! $post->content !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">{{ __('Post Information') }}</h3>
                         </div>
-                        <div class="card-body post-meta">
-                            <div class="mb-3">
-                                <strong>{{ __('Status:') }}</strong>
-                                @if($post->is_active)
-                                    <span class="badge badge-success ml-2">{{ __('Active') }}</span>
-                                @else
-                                    <span class="badge badge-secondary ml-2">{{ __('Inactive') }}</span>
-                                @endif
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ __('Published:') }}</strong>
-                                @if($post->is_published)
-                                    <span class="badge badge-primary ml-2">{{ __('Published') }}</span>
-                                @else
-                                    <span class="badge badge-warning ml-2">{{ __('Draft') }}</span>
-                                @endif
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ __('Slug:') }}</strong>
-                                <span class="text-muted">{{ $post->slug }}</span>
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ __('Author:') }}</strong>
-                                <span>{{ $post->user ? $post->user->name : __('Unknown') }}</span>
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ __('Created:') }}</strong>
-                                <span class="text-muted">{{ $post->created_at->format('M d, Y \a\t H:i') }}</span>
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ __('Last Updated:') }}</strong>
-                                <span class="text-muted">{{ $post->updated_at->format('M d, Y \a\t H:i') }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ __('Actions') }}</h3>
-                        </div>
                         <div class="card-body">
-                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary btn-block">
-                                <i class="fas fa-edit"></i> {{ __('Edit Post') }}
-                            </a>
-                            <form action="{{ route('post.destroy', $post->id) }}" method="POST" class="mt-2">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" class="btn btn-danger btn-block btn-delete" data-id="{{ $post->id }}">
-                                    <i class="fas fa-trash"></i> {{ __('Delete Post') }}
-                                </button>
-                            </form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ __('Post Title') }}</label>
+                                        <p class="form-control-plaintext font-weight-bold mb-0">{{ $post->title }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{ __('Slug') }}</label>
+                                        <p class="form-control-plaintext text-muted mb-0">{{ $post->slug ?? __('N/A') }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{ __('Content') }}</label>
+                                        <div class="border rounded p-3 post-content">
+                                            {!! $post->content !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">{{ __('Post Settings') }}</h3>
+                                        </div>
+                                        <div class="card-body post-meta">
+                                            <div class="form-group mb-3">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <strong>{{ __('Active Status') }}</strong>
+                                                    @if($post->is_active)
+                                                        <span class="badge badge-success ml-2">{{ __('Active') }}</span>
+                                                    @else
+                                                        <span class="badge badge-secondary ml-2">{{ __('Inactive') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <strong>{{ __('Published Status') }}</strong>
+                                                    @if($post->is_published)
+                                                        <span class="badge badge-primary ml-2">{{ __('Published') }}</span>
+                                                    @else
+                                                        <span class="badge badge-warning ml-2">{{ __('Draft') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <strong>{{ __('Author:') }}</strong>
+                                                <span>{{ $post->user ? $post->user->name : __('Unknown') }}</span>
+                                            </div>
+                                            <div class="mt-3">
+                                                <small class="text-muted d-block">
+                                                    <strong>{{ __('Created:') }}</strong> {{ $post->created_at->format('M d, Y \a\t H:i') }}
+                                                </small>
+                                                <small class="text-muted d-block">
+                                                    <strong>{{ __('Last Updated:') }}</strong> {{ $post->updated_at->format('M d, Y \a\t H:i') }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group text-right">
+                                        <a href="{{ route('post.index') }}" class="btn outline btn-danger">
+                                            {{ __('Back to Posts') }}
+                                        </a>
+                                        <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">
+                                            {{ __('Edit Post') }}
+                                        </a>
+                                        <form action="{{ route('post.destroy', $post->id) }}" method="POST" class="d-inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $post->id }}">
+                                                {{ __('Delete Post') }}
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
