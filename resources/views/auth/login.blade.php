@@ -31,9 +31,6 @@
                     <div class="form-group">
                         <div class="label-with-link">
                             <label for="password">Password</label>
-                            @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}" class="forgot-link">Forgot password?</a>
-                            @endif
                         </div>
                         <div class="input-with-icon">
                             <span class="icon" aria-hidden="true">
@@ -57,14 +54,16 @@
                     <div class="remember-me">
                         <input id="remember" name="remember" type="checkbox" {{ old('remember') ? 'checked' : '' }}>
                         <label for="remember">Remember me</label>
+                        @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}" class="forgot-link">Forgot password?</a>
+                        @endif
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn-primary">Sign in</button>
                     </div>
                     <div class="register-link">
                         <p>
-                            Don't have an account?
-                            <a href="{{ route('register') }}">Create one now</a>
+                            <a href="{{ route('register') }}">Don't have an account?</a>
                         </p>
                     </div>
                 </form>

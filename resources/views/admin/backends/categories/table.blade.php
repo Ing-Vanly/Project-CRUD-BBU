@@ -33,13 +33,17 @@
                                     <a class="dropdown-item" href="{{ route('category.show', $category->id) }}">
                                         <i class="fas fa-eye text-info mr-2"></i> {{ __('View') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('category.edit', $category->id) }}">
-                                        <i class="fas fa-pencil-alt text-primary mr-2"></i> {{ __('Edit') }}
-                                    </a>
+                                    @can('category.edit')
+                                        <a class="dropdown-item" href="{{ route('category.edit', $category->id) }}">
+                                            <i class="fas fa-pencil-alt text-primary mr-2"></i> {{ __('Edit') }}
+                                        </a>
+                                    @endcan
+                                    @can('category.delete')
                                     <a class="dropdown-item btn-delete" href="#" data-id="{{ $category->id }}"
                                         data-href="{{ route('category.destroy', $category->id) }}">
                                         <i class="fas fa-trash-alt text-danger mr-2"></i> {{ __('Delete') }}
                                     </a>
+                                    @endcan
                                 </div>
                             </div>
                             <form action="{{ route('category.destroy', $category->id) }}" method="POST"

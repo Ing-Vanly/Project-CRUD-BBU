@@ -14,6 +14,8 @@ class BusinessLocationController extends Controller
      */
     public function index(Request $request)
     {
+        $this->enforcePermission('business_location.view');
+
         $query = BusinessLocation::query();
 
         if ($request->filled('search')) {
@@ -47,6 +49,8 @@ class BusinessLocationController extends Controller
      */
     public function create()
     {
+        $this->enforcePermission('business_location.create');
+
         return view('admin.backends.business_locations.create');
     }
 
@@ -55,6 +59,8 @@ class BusinessLocationController extends Controller
      */
     public function store(Request $request)
     {
+        $this->enforcePermission('business_location.create');
+
         $data = $this->validatedAttributes($request);
 
         try {
@@ -84,6 +90,8 @@ class BusinessLocationController extends Controller
      */
     public function show(BusinessLocation $businessLocation)
     {
+        $this->enforcePermission('business_location.view');
+
         return view('admin.backends.business_locations.show', compact('businessLocation'));
     }
 
@@ -92,6 +100,8 @@ class BusinessLocationController extends Controller
      */
     public function edit(BusinessLocation $businessLocation)
     {
+        $this->enforcePermission('business_location.edit');
+
         return view('admin.backends.business_locations.edit', compact('businessLocation'));
     }
 
@@ -100,6 +110,8 @@ class BusinessLocationController extends Controller
      */
     public function update(Request $request, BusinessLocation $businessLocation)
     {
+        $this->enforcePermission('business_location.edit');
+
         $data = $this->validatedAttributes($request);
 
         try {
@@ -129,6 +141,8 @@ class BusinessLocationController extends Controller
      */
     public function destroy(Request $request, BusinessLocation $businessLocation)
     {
+        $this->enforcePermission('business_location.delete');
+
         try {
             DB::beginTransaction();
 

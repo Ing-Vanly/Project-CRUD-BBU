@@ -26,11 +26,13 @@
                                 <div class="col-6 col-xs-6 col-sm-6">
                                     <h3 class="card-title">{{ __('User role list') }}</h3>
                                 </div>
-                                <div class="col-6 col-xs-6 col-sm-6">
-                                    <a class="btn btn-primary float-right" href="{{ route('role.create') }}">
-                                        <i class=" fa fa-plus-circle"></i>
-                                        {{ __('Add New') }}
-                                    </a>
+                                <div class="col-6 col-xs-6 col-sm-6 text-right">
+                                    @can('role.create')
+                                        <a class="btn btn-primary" href="{{ route('role.create') }}">
+                                            <i class="fa fa-plus-circle mr-1"></i>
+                                            {{ __('Add New') }}
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                         </div>

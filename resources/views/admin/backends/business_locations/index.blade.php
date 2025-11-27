@@ -44,9 +44,11 @@
                     <h1>{{ __('Business Locations') }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('business-location.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus-circle mr-1"></i> {{ __('Add Location') }}
-                    </a>
+                    @can('business_location.create')
+                        <a href="{{ route('business-location.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus-circle mr-1"></i> {{ __('Add Location') }}
+                        </a>
+                    @endcan
                 </div>
             </div>
         </div>

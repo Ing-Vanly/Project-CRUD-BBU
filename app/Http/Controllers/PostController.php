@@ -14,6 +14,8 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
+        $this->enforcePermission('post.view');
+
         $query = Post::with('user');
 
         // Search by title
@@ -44,11 +46,15 @@ class PostController extends Controller
 
     public function create()
     {
+        $this->enforcePermission('post.create');
+
         return view('admin.backends.post.create');
     }
 
     public function store(Request $request)
     {
+        $this->enforcePermission('post.create');
+
         $request->validate([
             'title' => 'required|string|max:200',
             'content' => 'required|string',
@@ -79,18 +85,24 @@ class PostController extends Controller
 
     public function show($id)
     {
+        $this->enforcePermission('post.view');
+
         $post = Post::with('user')->findOrFail($id);
         return view('admin.backends.post.show', compact('post'));
     }
 
     public function edit($id)
     {
+        $this->enforcePermission('post.edit');
+
         $post = Post::findOrFail($id);
         return view('admin.backends.post.edit', compact('post'));
     }
 
     public function update(Request $request, $id)
     {
+        $this->enforcePermission('post.edit');
+
         $request->validate([
             'title' => 'required|string|max:200',
             'content' => 'required|string',
@@ -120,6 +132,8 @@ class PostController extends Controller
 
     public function destroy(Request $request, string $id)
     {
+        $this->enforcePermission('post.delete');
+
         try {
             DB::beginTransaction();
             $post = Post::findOrFail($id);
@@ -163,6 +177,8 @@ class PostController extends Controller
 
     public function togglePublished($id)
     {
+        $this->enforcePermission('post.publish');
+
         try {
             DB::beginTransaction();
             $post = Post::findOrFail($id);

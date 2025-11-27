@@ -110,10 +110,12 @@
                                     <h3 class="card-title">{{ __('Post Management') }}</h3>
                                 </div>
                                 <div class="col-6 col-xs-6 col-sm-6">
-                                    <a class="btn btn-primary float-right" href="{{ route('post.create') }}">
-                                        <i class=" fa fa-plus-circle"></i>
-                                        {{ __('Add New Post') }}
-                                    </a>
+                                    @can('post.create')
+                                        <a class="btn btn-primary float-right" href="{{ route('post.create') }}">
+                                            <i class=" fa fa-plus-circle"></i>
+                                            {{ __('Add New Post') }}
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                             <div class="row mt-3">

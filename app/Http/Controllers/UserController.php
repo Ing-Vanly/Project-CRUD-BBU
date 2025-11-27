@@ -13,18 +13,24 @@ class UserController extends Controller
 {
     public function index()
     {
+        $this->enforcePermission('user.view');
+
         $users = User::with('roles')->paginate(10);
         return view('admin.backends.user.index', compact('users'));
     }
 
     public function create()
     {
+        $this->enforcePermission('user.create');
+
         $roles = Role::all();
         return view('admin.backends.user.create', compact('roles'));
     }
 
     public function store(Request $request)
     {
+        $this->enforcePermission('user.create');
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -53,6 +59,8 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $this->enforcePermission('user.edit');
+
         $user = User::with('roles')->findOrFail($id);
         $roles = Role::all();
         return view('admin.backends.user.edit', compact('user', 'roles'));
@@ -60,6 +68,8 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->enforcePermission('user.edit');
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
@@ -94,6 +104,8 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        $this->enforcePermission('user.delete');
+
         try {
             DB::beginTransaction();
             $user = User::findOrFail($id);

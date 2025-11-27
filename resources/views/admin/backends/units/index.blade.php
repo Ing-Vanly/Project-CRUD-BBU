@@ -119,10 +119,12 @@
                                     <h3 class="card-title">{{ __('Unit Management') }}</h3>
                                 </div>
                                 <div class="col-6 col-xs-6 col-sm-6">
-                                    <a class="btn btn-primary float-right" href="{{ route('unit.create') }}">
-                                        <i class=" fa fa-plus-circle"></i>
-                                        {{ __('Add New Unit') }}
-                                    </a>
+                                    @can('unit.create')
+                                        <a class="btn btn-primary float-right" href="{{ route('unit.create') }}">
+                                            <i class=" fa fa-plus-circle"></i>
+                                            {{ __('Add New Unit') }}
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
 

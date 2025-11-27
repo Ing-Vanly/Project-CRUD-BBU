@@ -47,13 +47,17 @@
                                     <a class="dropdown-item" href="{{ route('brand.show', $brand) }}">
                                         <i class="fas fa-eye text-info mr-2"></i> {{ __('View') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('brand.edit', $brand) }}">
-                                        <i class="fas fa-pencil-alt text-primary mr-2"></i> {{ __('Edit') }}
-                                    </a>
-                                    <a class="dropdown-item btn-delete" href="#" data-id="{{ $brand->id }}"
-                                        data-href="{{ route('brand.destroy', $brand) }}">
-                                        <i class="fas fa-trash-alt text-danger mr-2"></i> {{ __('Delete') }}
-                                    </a>
+                                    @can('brand.edit')
+                                        <a class="dropdown-item" href="{{ route('brand.edit', $brand) }}">
+                                            <i class="fas fa-pencil-alt text-primary mr-2"></i> {{ __('Edit') }}
+                                        </a>
+                                    @endcan
+                                    @can('brand.delete')
+                                        <a class="dropdown-item btn-delete" href="#" data-id="{{ $brand->id }}"
+                                            data-href="{{ route('brand.destroy', $brand) }}">
+                                            <i class="fas fa-trash-alt text-danger mr-2"></i> {{ __('Delete') }}
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                             <form action="{{ route('brand.destroy', $brand) }}" method="POST"

@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
@@ -11,31 +9,35 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BusinessSettingController;
-use App\Http\Controllers\BusinessLocationController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BusinessLocationController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
-// Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
-    return view('auth.login');
+    return auth()->check()
+        ? redirect()->route('dashboard')
+        : view('auth.login');
 });
 Auth::routes();
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-Route::resource('/role', RoleController::class);
-Route::resource('/user', UserController::class);
-Route::resource('/post', PostController::class);
-Route::post('/post/{id}/toggle-published', [PostController::class, 'togglePublished'])->name('post.toggle-published');
-Route::resource('/category', CategoryController::class);
-Route::resource('/unit', UnitController::class);
-Route::resource('/brand', BrandController::class);
-Route::resource('/product', ProductController::class);
-Route::get('/order/data/table', [OrderController::class, 'data'])->name('order.data');
-Route::get('/order/export', [OrderController::class, 'export'])->name('order.export');
-Route::resource('/order', OrderController::class);
-Route::resource('/business-location', BusinessLocationController::class);
-Route::get('/settings/business', [BusinessSettingController::class, 'edit'])->name('business-setting.edit');
-Route::put('/settings/business', [BusinessSettingController::class, 'update'])->name('business-setting.update');
-Route::resource('author', AuthorController::class);
-// });
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+    Route::resource('/role', RoleController::class);
+    Route::resource('/user', UserController::class);
+    Route::resource('/post', PostController::class);
+    Route::post('/post/{id}/toggle-published', [PostController::class, 'togglePublished'])->name('post.toggle-published');
+    Route::resource('/category', CategoryController::class);
+    Route::resource('/unit', UnitController::class);
+    Route::resource('/brand', BrandController::class);
+    Route::resource('/product', ProductController::class);
+    Route::get('/order/data/table', [OrderController::class, 'data'])->name('order.data');
+    Route::get('/order/export', [OrderController::class, 'export'])->name('order.export');
+    Route::resource('/order', OrderController::class);
+    Route::resource('/business-location', BusinessLocationController::class);
+    Route::get('/settings/business', [BusinessSettingController::class, 'edit'])->name('business-setting.edit');
+    Route::put('/settings/business', [BusinessSettingController::class, 'update'])->name('business-setting.update');
+    Route::resource('author', AuthorController::class);
+});
 
 // Route::prefix('admin')->group(function () {
 //     Route::get('/', function () {

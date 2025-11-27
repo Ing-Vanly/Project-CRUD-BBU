@@ -8,11 +8,15 @@ use App\Models\Order;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
     public function index()
     {
+        $this->enforcePermission('order.view');
+
         $products = Product::orderBy('name')->get();
         $statuses = Order::STATUSES;
 
@@ -21,6 +25,8 @@ class OrderController extends Controller
 
     public function data(Request $request)
     {
+        $this->enforcePermission('order.view');
+
         $orders = $this->filteredOrders($request)->get();
 
         return response()->json([
@@ -30,6 +36,8 @@ class OrderController extends Controller
 
     public function create()
     {
+        $this->enforcePermission('order.create');
+
         $products = Product::where('status', 'active')->orderBy('name')->get();
         $statuses = Order::STATUSES;
 
@@ -38,6 +46,8 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
+        $this->enforcePermission('order.create');
+
         $product = Product::findOrFail($request->input('product_id'));
 
         $order = Order::create([
@@ -61,6 +71,8 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+        $this->enforcePermission('order.view');
+
         $order->load('product');
 
         return view('admin.backends.order.show', compact('order'));
@@ -68,6 +80,8 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
+        $this->enforcePermission('order.edit');
+
         $products = Product::orderBy('name')->get();
         $statuses = Order::STATUSES;
 
@@ -76,6 +90,8 @@ class OrderController extends Controller
 
     public function update(UpdateOrderRequest $request, Order $order)
     {
+        $this->enforcePermission('order.edit');
+
         $newProduct = Product::findOrFail($request->input('product_id'));
 
         $this->syncStockLevels($order, $newProduct, (int) $request->input('quantity'));
@@ -101,28 +117,58 @@ class OrderController extends Controller
             ->with('msg', __('Order #:number updated successfully.', ['number' => $order->order_number]));
     }
 
-    public function destroy(Order $order)
+    public function destroy(Request $request, Order $order)
     {
-        if ($order->product) {
-            $order->product->increment('stock', $order->quantity);
-        }
+        $this->enforcePermission('order.delete');
 
-        $order->delete();
+        try {
+            DB::beginTransaction();
 
-        if (request()->ajax()) {
-            return response()->json([
-                'status' => 1,
-                'message' => __('Order deleted successfully.'),
+            if ($order->product) {
+                $order->product->increment('stock', $order->quantity);
+            }
+
+            $order->delete();
+
+            DB::commit();
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => __('Order deleted successfully.'),
+                    'msg' => __('Order deleted successfully.'),
+                ]);
+            }
+
+            return redirect()->route('order.index')
+                ->with('success', 1)
+                ->with('msg', __('Order deleted successfully.'));
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            Log::error('Unable to delete order.', [
+                'order_id' => $order->id,
+                'error' => $e->getMessage(),
             ]);
-        }
 
-        return redirect()->route('order.index')
-            ->with('success', 1)
-            ->with('msg', __('Order deleted successfully.'));
+            if ($request->ajax()) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => __('Unable to delete order right now.'),
+                    'msg' => __('Unable to delete order right now.'),
+                ], 500);
+            }
+
+            return redirect()->back()
+                ->with('success', 0)
+                ->with('msg', __('Unable to delete order right now.'));
+        }
     }
 
     public function export(Request $request)
     {
+        $this->enforcePermission('order.export');
+
         $orders = $this->filteredOrders($request)->get();
         $filename = 'orders-' . now()->format('YmdHis') . '.xls';
 

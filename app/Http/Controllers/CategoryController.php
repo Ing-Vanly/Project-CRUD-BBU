@@ -14,6 +14,8 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->enforcePermission('category.view');
+
         $query = Category::query();
 
         // Search by name
@@ -42,6 +44,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->enforcePermission('category.create');
+
         $categories = Category::all();
         return view('admin.backends.categories.create', compact('categories'));
     }
@@ -51,6 +55,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->enforcePermission('category.create');
 
         $request->validate([
             'name'        => 'required|string|max:255',
@@ -78,6 +83,8 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
+        $this->enforcePermission('category.view');
+
         $category = Category::findOrFail($id);
         return view('admin.backends.categories.show', compact('category'));
     }
@@ -87,6 +94,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
+        $this->enforcePermission('category.edit');
+
         $category = Category::findOrFail($id);
         return view('admin.backends.categories.edit', compact('category'));
     }
@@ -96,6 +105,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->enforcePermission('category.edit');
+
         $request->validate([
             'name'        => 'required|string|max:255',
             'slug'        => 'nullable|string|max:200|unique:categories,slug,' . $id,
@@ -122,6 +133,8 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
+        $this->enforcePermission('category.delete');
+
         try {
             DB::beginTransaction();
             $category = Category::findOrFail($id);

@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $this->enforcePermission('dashboard.view');
+
         return view('admin.index');
     }
 }

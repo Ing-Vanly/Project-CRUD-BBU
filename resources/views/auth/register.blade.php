@@ -114,7 +114,7 @@
                         <button type="submit" class="btn-primary">Create Account</button>
                     </div>
                     <div class="login-link">
-                        <p>Already have an account? <a href="{{ route('login') }}">Sign in</a></p>
+                        <p><a href="{{ route('login') }}">Already have an account?</a></p>
                     </div>
                 </form>
             </div>

@@ -13,6 +13,8 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
+        $this->enforcePermission('brand.view');
+
         $query = Brand::query();
 
         // Apply search filter
@@ -41,7 +43,8 @@ class BrandController extends Controller
      */
     public function create()
     {
-        
+        $this->enforcePermission('brand.create');
+
         return view('admin.backends.brand.create');
     }
 
@@ -50,6 +53,8 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+        $this->enforcePermission('brand.create');
+
         $request->validate([
             'name' => 'required|string|max:255|unique:brands,name',
             'slug' => 'nullable|string|max:255|unique:brands,slug',
@@ -82,6 +87,8 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
+        $this->enforcePermission('brand.view');
+
         return view('admin.backends.brand.show', compact('brand'));
     }
 
@@ -90,6 +97,8 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
+        $this->enforcePermission('brand.edit');
+
         return view('admin.backends.brand.edit', compact('brand'));
     }
 
@@ -98,6 +107,8 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
+        $this->enforcePermission('brand.edit');
+
         $request->validate([
             'name' => 'required|string|max:255|unique:brands,name,' . $brand->id,
             'slug' => 'nullable|string|max:255|unique:brands,slug,' . $brand->id,
@@ -135,6 +146,8 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
+        $this->enforcePermission('brand.delete');
+
         // Delete logo if exists
         if ($brand->logo && file_exists(public_path($brand->logo))) {
             unlink(public_path($brand->logo));

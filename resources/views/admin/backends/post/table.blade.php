@@ -33,14 +33,17 @@
                         </td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <label class="switch mr-2">
-                                    <input type="checkbox" class="toggle-published" data-id="{{ $post->id }}"
-                                        {{ $post->is_published ? 'checked' : '' }}>
-                                    <span class="slider round"></span>
-                                </label>
-                                {{-- <span class="badge {{ $post->is_published ? 'badge-primary' : 'badge-warning' }}">
-                                    {{ $post->is_published ? 'Published' : 'Unpublished' }}
-                                </span> --}}
+                                @can('post.publish')
+                                    <label class="switch mr-2">
+                                        <input type="checkbox" class="toggle-published" data-id="{{ $post->id }}"
+                                            {{ $post->is_published ? 'checked' : '' }}>
+                                        <span class="slider round"></span>
+                                    </label>
+                                @else
+                                    <span class="badge {{ $post->is_published ? 'badge-primary' : 'badge-warning' }}">
+                                        {{ $post->is_published ? __('Published') : __('Unpublished') }}
+                                    </span>
+                                @endcan
                             </div>
                         </td>
                         <td>{{ $post->created_at->format('M d, Y') }}</td>
@@ -56,13 +59,17 @@
                                     <a class="dropdown-item" href="{{ route('post.show', $post->id) }}">
                                         <i class="fas fa-eye text-info mr-2"></i> {{ __('View') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('post.edit', $post->id) }}">
-                                        <i class="fas fa-pencil-alt text-primary mr-2"></i> {{ __('Edit') }}
-                                    </a>
-                                    <a class="dropdown-item btn-delete" href="#" data-id="{{ $post->id }}"
-                                        data-href="{{ route('post.destroy', $post->id) }}">
-                                        <i class="fas fa-trash-alt text-danger mr-2"></i> {{ __('Delete') }}
-                                    </a>
+                                    @can('post.edit')
+                                        <a class="dropdown-item" href="{{ route('post.edit', $post->id) }}">
+                                            <i class="fas fa-pencil-alt text-primary mr-2"></i> {{ __('Edit') }}
+                                        </a>
+                                    @endcan
+                                    @can('post.delete')
+                                        <a class="dropdown-item btn-delete" href="#" data-id="{{ $post->id }}"
+                                            data-href="{{ route('post.destroy', $post->id) }}">
+                                            <i class="fas fa-trash-alt text-danger mr-2"></i> {{ __('Delete') }}
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                             <form action="{{ route('post.destroy', $post->id) }}" method="POST"

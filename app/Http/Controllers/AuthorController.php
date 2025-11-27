@@ -14,6 +14,8 @@ class AuthorController extends Controller
      */
     public function index(Request $request)
     {
+        $this->enforcePermission('author.view');
+
         $query = Author::query();
 
         if ($request->filled('search')) {
@@ -54,6 +56,8 @@ class AuthorController extends Controller
      */
     public function create()
     {
+        $this->enforcePermission('author.create');
+
         return view('admin.backends.author.create');
     }
 
@@ -62,6 +66,8 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
+        $this->enforcePermission('author.create');
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:authors,email',
@@ -93,6 +99,8 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
+        $this->enforcePermission('author.view');
+
         return view('admin.backends.author.show', compact('author'));
     }
 
@@ -101,6 +109,8 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
+        $this->enforcePermission('author.edit');
+
         return view('admin.backends.author.edit', compact('author'));
     }
 
@@ -109,6 +119,8 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
+        $this->enforcePermission('author.edit');
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:authors,email,' . $author->id,
@@ -140,6 +152,8 @@ class AuthorController extends Controller
      */
     public function destroy(Request $request, Author $author)
     {
+        $this->enforcePermission('author.delete');
+
         try {
             DB::beginTransaction();
             $author->delete();

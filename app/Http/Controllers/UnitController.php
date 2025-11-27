@@ -14,6 +14,8 @@ class UnitController extends Controller
      */
     public function index(Request $request)
     {
+        $this->enforcePermission('unit.view');
+
         $query = Unit::query();
 
         // Search by name
@@ -42,6 +44,8 @@ class UnitController extends Controller
      */
     public function create()
     {
+        $this->enforcePermission('unit.create');
+
         $units = Unit::all();
         return view('admin.backends.units.create', compact('units'));
     }
@@ -51,6 +55,8 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
+        $this->enforcePermission('unit.create');
+
         $request->validate([
             'name'        => 'required|string|max:255',
             'slug'        => 'nullable|string|max:255|unique:units,slug',
@@ -77,6 +83,8 @@ class UnitController extends Controller
      */
     public function show(string $id)
     {
+        $this->enforcePermission('unit.view');
+
         $unit = Unit::findOrFail($id);
         return view('admin.backends.units.show', compact('unit'));
     }
@@ -86,6 +94,8 @@ class UnitController extends Controller
      */
     public function edit(string $id)
     {
+        $this->enforcePermission('unit.edit');
+
         $unit = Unit::findOrFail($id);
         return view('admin.backends.units.edit', compact('unit'));
     }
@@ -95,6 +105,8 @@ class UnitController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->enforcePermission('unit.edit');
+
         $request->validate([
             'name'        => 'required|string|max:255',
             'slug'        => 'nullable|string|max:200|unique:units,slug,' . $id,
@@ -121,6 +133,8 @@ class UnitController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
+        $this->enforcePermission('unit.delete');
+
         try {
             DB::beginTransaction();
             $unit = Unit::findOrFail($id);

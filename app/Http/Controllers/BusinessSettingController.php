@@ -13,6 +13,8 @@ class BusinessSettingController extends Controller
      */
     public function edit()
     {
+        $this->enforcePermission('business_setting.view');
+
         $setting = BusinessSetting::first();
 
         if (!$setting) {
@@ -32,6 +34,8 @@ class BusinessSettingController extends Controller
      */
     public function update(Request $request)
     {
+        $this->enforcePermission('business_setting.update');
+
         $validation = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',

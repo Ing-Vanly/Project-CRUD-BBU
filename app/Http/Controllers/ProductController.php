@@ -15,6 +15,8 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $this->enforcePermission('product.view');
+
         $query = Product::with(['category', 'brand', 'unit']);
 
         // Apply search filter
@@ -70,6 +72,8 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $this->enforcePermission('product.create');
+
         $categories = Category::all();
         $brands = Brand::all();
         $units = Unit::all();
@@ -82,6 +86,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $this->enforcePermission('product.create');
+
         $request->validate([
             'name' => 'required|string|max:255|unique:products,name',
             'description' => 'nullable|string',
@@ -116,6 +122,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $this->enforcePermission('product.view');
+
         $product->load(['category', 'brand', 'unit']);
         return view('admin.backends.product.show', compact('product'));
     }
@@ -125,6 +133,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $this->enforcePermission('product.edit');
+
         $categories = Category::all();
         $brands = Brand::all();
         $units = Unit::all();
@@ -137,6 +147,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $this->enforcePermission('product.edit');
+
         $request->validate([
             'name' => 'required|string|max:255|unique:products,name,' . $product->id,
             'description' => 'nullable|string',
@@ -176,6 +188,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $this->enforcePermission('product.delete');
+
         // Delete image if exists
         if ($product->image && file_exists(public_path($product->image))) {
             unlink(public_path($product->image));
