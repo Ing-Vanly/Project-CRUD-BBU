@@ -457,18 +457,22 @@
                 e.preventDefault();
                 const deleteUrl = $(this).data('action');
 
-                Swal.fire({
-                    title: '{{ __('Are you sure?') }}',
-                    text: '{{ __('This order will be permanently deleted.') }}',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: '{{ __('Yes, delete!') }}',
-                    cancelButtonText: '{{ __('Cancel') }}',
+                const Confirmation = Swal.mixin({
                     customClass: {
-                        confirmButton: 'btn btn-danger mr-2',
-                        cancelButton: 'btn btn-secondary'
+                        confirmButton: 'btn btn-success mr-2',
+                        cancelButton: 'btn btn-danger'
                     },
                     buttonsStyling: false
+                });
+
+                Confirmation.fire({
+                    title: '{{ __('Are you sure?') }}',
+                    text: '{{ __("You won't be able to revert this!") }}',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '{{ __('Yes, delete it!') }}',
+                    cancelButtonText: '{{ __('No, cancel!') }}',
+                    reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({

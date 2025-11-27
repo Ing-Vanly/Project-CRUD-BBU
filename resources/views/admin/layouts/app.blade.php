@@ -87,6 +87,40 @@
             padding: 0 4px;
             transform: translate(45%, -45%);
         }
+
+        .notifications-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f3f4f6;
+            justify-content: center;
+        }
+
+        .navbar-profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #2563eb;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .navbar-user-dropdown .btn {
+            border-radius: 999px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding-right: 0.75rem;
+            padding-left: 0.35rem;
+        }
+
+        .navbar-user-dropdown .dropdown-menu {
+            min-width: 260px;
+        }
     </style>
 </head>
 

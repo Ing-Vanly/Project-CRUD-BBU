@@ -10,24 +10,8 @@
             $orderNotifications = $pendingOrderNotifications ?? ['count' => 0, 'orders' => collect()];
             $orderNotificationCount = (int) ($orderNotifications['count'] ?? 0);
             $orderNotificationItems = collect($orderNotifications['orders'] ?? []);
-            $currentUser = auth()->user();
-            $userName = $currentUser->name ?? __('User');
-            $nameSegments = preg_split('/\s+/', trim($userName));
-            $initials = '';
-            if ($nameSegments) {
-                foreach ($nameSegments as $segment) {
-                    if ($segment === '') {
-                        continue;
-                    }
-                    $initials .= mb_strtoupper(mb_substr($segment, 0, 1));
-                    if (mb_strlen($initials) >= 2) {
-                        break;
-                    }
-                }
-            }
-            $userInitials = $initials !== '' ? $initials : 'U';
         @endphp
-        <li class="nav-item dropdown d-flex align-items-center">
+        <li class="nav-item dropdown">
             <a class="nav-link position-relative d-flex align-items-center" data-toggle="dropdown" href="#"
                 role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="notifications-icon d-inline-flex align-items-center position-relative">
@@ -57,7 +41,7 @@
                             </span>
                         </div>
                     </a>
-                    @if (!$loop->last)
+                    @if (! $loop->last)
                         <div class="dropdown-divider"></div>
                     @endif
                 @empty
@@ -69,36 +53,28 @@
                 </a>
             </div>
         </li>
-        <li class="nav-item d-flex align-items-center ml-3">
-            <div class="btn-group navbar-user-dropdown">
-                <button type="button" class="btn btn-light dropdown-toggle d-flex align-items-center"
-                    data-toggle="dropdown">
-                    <span class="navbar-profile-avatar mr-2">{{ $userInitials }}</span>
-                    <span class="font-weight-bold">{{ $userName }}</span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right" role="menu">
-                    <div class="dropdown-header text-center">
-                        <div class="navbar-profile-avatar mb-2">{{ $userInitials }}</div>
-                        <div class="font-weight-bold">{{ $userName }}</div>
-                        @if ($currentUser && $currentUser->email)
-                            <small class="text-muted">{{ $currentUser->email }}</small>
-                        @endif
+        <li>
+            <div class="margin">
+                <div class="btn-group">
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                        Super Admin
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a href="" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> {{ __('My Profile') }}
+                        </a>
+                        <a href="{{ route('business-setting.edit') }}" class="dropdown-item">
+                            <i class="fas fa-sliders-h mr-2"></i> {{ __('System Settings') }}
+                        </a>
+                        <a id="header-logout" href="" onclick="event.preventDefault()" data-toggle="modal"
+                            data-target="#modal-logout" class="dropdown-item">
+                            <i class="fa fa-power-off mr-2"></i> {{ __('Logout') }}
+                        </a>
                     </div>
-                    <div class="dropdown-divider"></div>
-                    <a href="" class="dropdown-item">
-                        <i class="fas fa-user mr-2 text-muted"></i> {{ __('My Profile') }}
-                    </a>
-                    <a href="{{ route('business-setting.edit') }}" class="dropdown-item">
-                        <i class="fas fa-sliders-h mr-2 text-muted"></i> {{ __('System Settings') }}
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a id="header-logout" href="" onclick="event.preventDefault()" data-toggle="modal"
-                        data-target="#modal-logout" class="dropdown-item text-danger">
-                        <i class="fa fa-power-off mr-2"></i> {{ __('Logout') }}
-                    </a>
                 </div>
             </div>
         </li>
     </ul>
 </nav>
+
