@@ -1,19 +1,9 @@
 @extends('admin.layouts.app')
-
 @push('css')
 @endpush
-
 @section('contents')
     <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h3>{{ __('Edit User') }}</h3>
-                </div>
-            </div>
-        </div>
     </section>
-
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -50,7 +40,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -75,7 +64,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -96,16 +84,15 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
+                                <div class="form-group d-flew justify-content-end">
+                                    <a href="{{ route('user.index') }}" class="btn btn-outline-danger mr-2">
+                                        <i class="fa fa-arrow-circle-left"></i>
+                                        {{ __('Back') }}
+                                    </a>
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-save"></i>
                                         {{ __('Update User') }}
                                     </button>
-                                    <a href="{{ route('user.index') }}" class="btn btn-outline-primary">
-                                        <i class="fa fa-arrow-circle-left"></i>
-                                        {{ __('Back') }}
-                                    </a>
                             </form>
                         </div>
                     </div>
@@ -114,6 +101,5 @@
         </div>
     </section>
 @endsection
-
 @push('js')
 @endpush

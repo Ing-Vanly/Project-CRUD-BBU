@@ -1,21 +1,7 @@
 @extends('admin.layouts.app')
-
-@push('css')
-@endpush
-
 @section('contents')
     <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h3>{{ __('Users') }}</h3>
-                </div>
-                <div class="col-sm-6" style="text-align: right">
-                </div>
-            </div>
-        </div>
     </section>
-
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -34,7 +20,6 @@
                                 </div>
                             </div>
                         </div>
-
                         @include('admin.backends.user.table')
                     </div>
                 </div>
@@ -42,7 +27,6 @@
         </div>
     </section>
 @endsection
-
 @push('js')
     <script>
         $(document).on('click', '.btn-delete', function(e) {
