@@ -13,29 +13,39 @@
                     <td>{{ $loop->iteration }}</td>
                     <td class="text-capitalize">{{ $role->name }}</td>
                     <td>
-                        <div class="d-flex flex-wrap align-items-center">
-                            @can('role.edit')
-                                <a href="{{ route('role.edit', $role->id) }}" class="btn btn-sm btn-primary mr-2 mb-2">
-                                    <i class="fas fa-pencil-alt"></i> {{ __('Edit') }}
-                                </a>
-                            @endcan
-                            @can('role.delete')
-                                <form action="{{ route('role.destroy', $role->id) }}" method="POST"
-                                    class="d-inline-block form-delete-{{ $role->id }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-danger btn-sm btn-delete mb-2"
-                                        data-id="{{ $role->id }}" data-href="{{ route('role.destroy', $role->id) }}">
-                                        <i class="fas fa-trash-alt"></i> {{ __('Delete') }}
-                                    </button>
-                                </form>
-                            @endcan
-                            @cannot('role.edit')
-                                @cannot('role.delete')
-                                    <span class="text-muted">{{ __('No actions available') }}</span>
-                                @endcannot
-                            @endcannot
-                        </div>
+                        @canany(['role.edit', 'role.delete'])
+                            <div class="dropdown">
+                                <button class="btn btn-link btn-sm p-0" type="button"
+                                    id="actionDropdownRole{{ $role->id }}" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v text-muted"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right"
+                                    aria-labelledby="actionDropdownRole{{ $role->id }}">
+                                    @can('role.edit')
+                                        <a href="{{ route('role.edit', $role->id) }}" class="dropdown-item">
+                                            <i class="fas fa-pencil-alt text-primary mr-2"></i> {{ __('Edit') }}
+                                        </a>
+                                    @endcan
+                                    @can('role.delete')
+                                        @can('role.edit')
+                                            <div class="dropdown-divider"></div>
+                                        @endcan
+                                        <form action="{{ route('role.destroy', $role->id) }}" method="POST"
+                                            class="form-delete-{{ $role->id }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="dropdown-item text-danger btn-delete"
+                                                data-id="{{ $role->id }}" data-href="{{ route('role.destroy', $role->id) }}">
+                                                <i class="fas fa-trash-alt mr-2"></i> {{ __('Delete') }}
+                                            </button>
+                                        </form>
+                                    @endcan
+                                </div>
+                            </div>
+                        @else
+                            <span class="text-muted">{{ __('No actions available') }}</span>
+                        @endcanany
                     </td>
                 </tr>
             @endforeach

@@ -1,16 +1,7 @@
 @extends('admin.layouts.app')
-
 @section('contents')
     <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>{{ __('Edit Role') }}</h1>
-                </div>
-            </div>
-        </div>
     </section>
-
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -20,7 +11,6 @@
                             <form action="{{ route('role.update', $role->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-
                                 <div class="form-group">
                                     <label for="name">{{ __('Role Name') }}</label>
                                     <input type="text" id="name" name="name"
@@ -30,14 +20,12 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 @include('admin.backends.role.partials.permission-grid', [
                                     'permissionModules' => $permissionModules,
                                     'selectedPermissions' => $selectedPermissions,
                                 ])
-
-                                <div class="d-flex justify-content-between align-items-center mt-4">
-                                    <a href="{{ route('role.index') }}" class="btn btn-light">
+                                <div class="d-flex justify-content-end align-items-center mt-4">
+                                    <a href="{{ route('role.index') }}" class="btn btn-outline-danger mr-2">
                                         {{ __('Cancel') }}
                                     </a>
                                     <button type="submit" class="btn btn-primary">
