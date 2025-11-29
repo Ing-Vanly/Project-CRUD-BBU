@@ -84,15 +84,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group d-flew justify-content-end">
-                                    <a href="{{ route('user.index') }}" class="btn btn-outline-danger mr-2">
-                                        <i class="fa fa-arrow-circle-left"></i>
-                                        {{ __('Back') }}
-                                    </a>
+                                <div class="form-group d-flex justify-content-end">
+                                    <div class="ml-auto">
+                                        <a href="{{ route('user.index') }}" class="btn btn-outline-danger mr-2">
+                                            {{ __('Back') }}
+                                        </a>
+                                    </div>
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-save"></i>
                                         {{ __('Update User') }}
                                     </button>
+                                </div>
                             </form>
                         </div>
                     </div>
