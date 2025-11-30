@@ -41,12 +41,12 @@
             });
 
             Confirmation.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: "{{ __('Are you sure?') }}",
+                text: "{{ __("You won't be able to revert this!") }}",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
+                confirmButtonText: "{{ __('Yes, delete it!') }}",
+                cancelButtonText: "{{ __('No, cancel!') }}",
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -67,7 +67,7 @@
                             }
                         },
                         error: function(xhr) {
-                            toastr.error('Something went wrong. Please try again!');
+                            toastr.error('{{ __('Something went wrong. Please try again!') }}');
                         }
                     });
                 }

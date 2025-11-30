@@ -30,7 +30,7 @@
                         <a href="{{ route('dashboard') }}"
                             class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>{{ __('Dashboard Page') }}</p>
+                            <p>{{ __('Dashboard') }}</p>
                         </a>
                     </li>
                 @endcan

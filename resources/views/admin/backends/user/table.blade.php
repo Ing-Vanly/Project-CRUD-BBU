@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th>{{ __('ID') }}</th>
+                <th>{{ __('Image') }}</th>
                 <th>{{ __('Name') }}</th>
                 <th>{{ __('Email') }}</th>
                 <th>{{ __('Role') }}</th>
@@ -14,6 +15,13 @@
             @forelse ($users as $key => $user)
                 <tr>
                     <td>{{ $key + 1 }}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="{{ getImagePath($user->image ?? null, 'users') }}"
+                                alt="{{ $user->name }}" class="rounded-circle border" width="45" height="45"
+                                style="object-fit: cover;">
+                        </div>
+                    </td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
@@ -52,7 +60,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center">{{ __('No data found') }}</td>
+                    <td colspan="7" class="text-center">{{ __('No data found') }}</td>
                 </tr>
             @endforelse
         </tbody>

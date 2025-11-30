@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BusinessSettingController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BusinessLocationController;
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/settings/business', [BusinessSettingController::class, 'update'])->name('business-setting.update');
     Route::resource('author', AuthorController::class);
     Route::post('/locale', [LocaleController::class, 'switch'])->name('locale.switch');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // Route::prefix('admin')->group(function () {

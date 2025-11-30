@@ -108,6 +108,13 @@
             font-weight: 600;
             font-size: 0.85rem;
             text-transform: uppercase;
+            overflow: hidden;
+        }
+
+        .navbar-profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .navbar-user-dropdown .btn {

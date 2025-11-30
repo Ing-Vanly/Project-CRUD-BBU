@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Traits\HandlesUserImages;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    use HandlesUserImages;
     public function index()
     {
         $this->enforcePermission('user.view');
@@ -35,7 +38,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
-            'role' => 'required|exists:roles,name'
+            'role' => 'required|exists:roles,name',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
         try {
@@ -45,13 +49,14 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'image' => $this->handleImageUpload($request),
             ]);
 
             $user->assignRole($request->role);
             
             DB::commit();
             return redirect()->route('user.index')->with(['success' => true, 'msg' => __('User created successfully!')]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->with(['success' => false, 'msg' => __('Something went wrong!') . $e->getMessage()]);
         }
@@ -74,7 +79,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|min:8|confirmed',
-            'role' => 'required|exists:roles,name'
+            'role' => 'required|exists:roles,name',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
         try {
@@ -85,6 +91,7 @@ class UserController extends Controller
             $updateData = [
                 'name' => $request->name,
                 'email' => $request->email,
+                'image' => $this->handleImageUpload($request, $user->image),
             ];
             
             if ($request->filled('password')) {
@@ -96,7 +103,7 @@ class UserController extends Controller
             
             DB::commit();
             return redirect()->route('user.index')->with(['success' => true, 'msg' => __('User updated successfully!')]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->with(['success' => false, 'msg' => __('Something went wrong!') . $e->getMessage()]);
         }
@@ -109,6 +116,14 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
             $user = User::findOrFail($id);
+
+            if ($user->image) {
+                $imagePath = public_path('uploads/users/' . $user->image);
+                if (File::exists($imagePath)) {
+                    File::delete($imagePath);
+                }
+            }
+
             $user->delete();
 
             $users = User::with('roles')->latest('id')->paginate(10);
@@ -129,4 +144,5 @@ class UserController extends Controller
         }
         return response()->json($output);
     }
+
 }

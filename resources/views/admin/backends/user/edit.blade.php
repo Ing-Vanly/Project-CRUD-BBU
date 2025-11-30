@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
 @push('css')
 @endpush
+
+@include('admin.components.media-upload-styles')
+@include('admin.components.media-preview-script')
 @section('contents')
     <section class="content-header">
     </section>
@@ -13,7 +16,7 @@
                             <h3 class="card-title">{{ __('Edit User') }}: {{ $user->name }}</h3>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('user.update', $user->id) }}" method="POST">
+                            <form action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
@@ -83,6 +86,28 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="image">{{ __('Profile Image') }}</label>
+                                            <input type="file" name="image" id="image"
+                                                class="form-control @error('image') is-invalid @enderror"
+                                                accept="image/*">
+                                            @error('image')
+                                                <span class="invalid-feedback d-block">{{ $message }}</span>
+                                            @enderror
+                                            <small class="form-text text-muted">{{ __('Leave empty to keep current image. Accepted formats: JPG, PNG, GIF. Max size: 2MB') }}</small>
+                                            <div class="media-preview mt-2" id="userImagePreview">
+                                                @if ($user->image)
+                                                    <img src="{{ getImagePath($user->image, 'users') }}" alt="{{ $user->name }}" class="img-fluid">
+                                                @else
+                                                    <div class="text-muted text-center">
+                                                        <i class="fas fa-user-circle fa-2x mb-2"></i>
+                                                        <p class="mb-0">{{ __('Image preview will appear here') }}</p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group d-flex justify-content-end">
                                     <div class="ml-auto">
@@ -104,4 +129,12 @@
     </section>
 @endsection
 @push('js')
+    <script>
+        attachImagePreview('image', 'userImagePreview', `
+            <div class="text-muted text-center">
+                <i class="fas fa-user-circle fa-2x mb-2"></i>
+                <p class="mb-0">{{ __('Image preview will appear here') }}</p>
+            </div>
+        `);
+    </script>
 @endpush

@@ -26,6 +26,9 @@
                 }
             }
             $userInitials = $initials !== '' ? $initials : 'U';
+            $userAvatar = $currentUser && ($currentUser->image ?? null)
+                ? getImagePath($currentUser->image, 'users')
+                : null;
             $supportedLocales = config('app.supported_locales', []);
             $currentLocale = app()->getLocale();
             $fallbackLocaleKey = ! empty($supportedLocales) ? array_key_first($supportedLocales) : null;
@@ -113,28 +116,41 @@
             <div class="btn-group navbar-user-dropdown">
                 <button type="button" class="btn btn-light dropdown-toggle d-flex align-items-center"
                     data-toggle="dropdown">
-                    <span class="navbar-profile-avatar mr-2">{{ $userInitials }}</span>
+                    <span class="navbar-profile-avatar mr-2">
+                        @if ($userAvatar)
+                            <img src="{{ $userAvatar }}" alt="{{ $userName }}">
+                        @else
+                            {{ $userInitials }}
+                        @endif
+                    </span>
                     <span class="font-weight-bold">{{ $userName }}</span>
                     <span class="sr-only">{{ __('Toggle Dropdown') }}</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" role="menu">
                     <div class="dropdown-header text-center">
-                        <div class="navbar-profile-avatar mb-2">{{ $userInitials }}</div>
+                        <div class="navbar-profile-avatar mb-2">
+                            @if ($userAvatar)
+                                <img src="{{ $userAvatar }}" alt="{{ $userName }}">
+                            @else
+                                {{ $userInitials }}
+                            @endif
+                        </div>
                         <div class="font-weight-bold">{{ $userName }}</div>
                         @if ($currentUser && $currentUser->email)
                             <small class="text-muted">{{ $currentUser->email }}</small>
                         @endif
                     </div>
                     <div class="dropdown-divider"></div>
-                    <a href="" class="dropdown-item">
+                    <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="fas fa-user mr-2 text-muted"></i> {{ __('My Profile') }}
                     </a>
                     <a href="{{ route('business-setting.edit') }}" class="dropdown-item">
                         <i class="fas fa-sliders-h mr-2 text-muted"></i> {{ __('System Settings') }}
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a id="header-logout" href="" onclick="event.preventDefault()" data-toggle="modal"
-                        data-target="#modal-logout" class="dropdown-item text-danger">
+                    <a id="header-logout" href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="dropdown-item text-danger">
                         <i class="fa fa-power-off mr-2"></i> {{ __('Logout') }}
                     </a>
                 </div>
@@ -142,3 +158,7 @@
         </li>
     </ul>
 </nav>
+
+<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+    @csrf
+</form>
