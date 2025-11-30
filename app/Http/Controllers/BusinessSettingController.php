@@ -64,7 +64,7 @@ class BusinessSettingController extends Controller
         return redirect()
             ->route('business-setting.edit')
             ->with('success', 1)
-            ->with('msg', 'Business settings updated successfully!');
+            ->with('msg', __('Business settings updated successfully!'));
     }
 
     /**

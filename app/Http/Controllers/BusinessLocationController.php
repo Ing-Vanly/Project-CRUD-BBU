@@ -74,14 +74,14 @@ class BusinessLocationController extends Controller
 
             return redirect()->route('business-location.index')
                 ->with('success', 1)
-                ->with('msg', 'Business location created successfully!');
+                ->with('msg', __('Business location created successfully!'));
         } catch (\Throwable $throwable) {
             DB::rollBack();
 
             return redirect()->back()
                 ->withInput()
                 ->with('success', 0)
-                ->with('msg', 'Unable to create business location. Please try again.');
+                ->with('msg', __('Unable to create business location. Please try again.'));
         }
     }
 
@@ -125,14 +125,14 @@ class BusinessLocationController extends Controller
 
             return redirect()->route('business-location.index')
                 ->with('success', 1)
-                ->with('msg', 'Business location updated successfully!');
+                ->with('msg', __('Business location updated successfully!'));
         } catch (\Throwable $throwable) {
             DB::rollBack();
 
             return redirect()->back()
                 ->withInput()
                 ->with('success', 0)
-                ->with('msg', 'Unable to update business location. Please try again.');
+                ->with('msg', __('Unable to update business location. Please try again.'));
         }
     }
 
@@ -159,27 +159,27 @@ class BusinessLocationController extends Controller
 
                 return response()->json([
                     'status' => 1,
-                    'msg' => 'Business location deleted successfully!',
+                    'msg' => __('Business location deleted successfully!'),
                     'view' => $view,
                 ]);
             }
 
             return redirect()->route('business-location.index')
                 ->with('success', 1)
-                ->with('msg', 'Business location deleted successfully!');
+                ->with('msg', __('Business location deleted successfully!'));
         } catch (\Throwable $throwable) {
             DB::rollBack();
 
             if ($request->ajax()) {
                 return response()->json([
                     'status' => 0,
-                    'msg' => 'Unable to delete business location. Please try again.',
+                    'msg' => __('Unable to delete business location. Please try again.'),
                 ], 422);
             }
 
             return redirect()->back()
                 ->with('success', 0)
-                ->with('msg', 'Unable to delete business location. Please try again.');
+                ->with('msg', __('Unable to delete business location. Please try again.'));
         }
     }
 

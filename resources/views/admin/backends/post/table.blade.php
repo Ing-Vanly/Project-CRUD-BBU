@@ -26,9 +26,9 @@
                         <td>{{ $post->user ? $post->user->name : 'N/A' }}</td>
                         <td>
                             @if ($post->is_active)
-                                <span class="badge badge-success">Active</span>
+                                <span class="badge badge-success">{{ __('Active') }}</span>
                             @else
-                                <span class="badge badge-secondary">Inactive</span>
+                                <span class="badge badge-secondary">{{ __('Inactive') }}</span>
                             @endif
                         </td>
                         <td>

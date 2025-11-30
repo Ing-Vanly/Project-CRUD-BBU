@@ -7,8 +7,8 @@
                 <div class="brand-overlay"></div>
                 <div class="brand-content">
                     <div class="branding-top">
-                        <h1>Create Account</h1>
-                        <p>Join us and start your journey today</p>
+                        <h1>{{ __('Create Account') }}</h1>
+                        <p>{{ __('Join us and start your journey today') }}</p>
                     </div>
                     <div class="illustration">
                         <svg width="200" height="200" viewBox="0 0 500 500" aria-hidden="true">
@@ -21,19 +21,19 @@
                         </svg>
                     </div>
                     <div class="branding-bottom">
-                        <p>&copy; 2025 Your Company. All rights reserved.</p>
+                        <p>&copy; 2025 {{ __('Your Company') }}. {{ __('All rights reserved.') }}</p>
                     </div>
                 </div>
             </div>
             <div class="register-form">
                 <div class="form-header">
-                    <h2>Create an Account</h2>
-                    <p>Fill in your details to get started</p>
+                    <h2>{{ __('Create an Account') }}</h2>
+                    <p>{{ __('Fill in your details to get started') }}</p>
                 </div>
                 <form method="POST" action="{{ route('register') }}" novalidate>
                     @csrf
                     <div class="form-group">
-                        <label for="name">Full Name</label>
+                        <label for="name">{{ __('Full Name') }}</label>
                         <div class="input-with-icon">
                             <span class="icon" aria-hidden="true">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -47,14 +47,14 @@
                             </span>
                             <input id="name" type="text" class="form-input @error('name') is-invalid @enderror"
                                 name="name" value="{{ old('name') }}" required autocomplete="name" autofocus
-                                placeholder="John Doe">
+                                placeholder="{{ __('John Doe') }}">
                         </div>
                         @error('name')
                             <span class="error-message" role="alert">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="email">Email Address</label>
+                        <label for="email">{{ __('Email Address') }}</label>
                         <div class="input-with-icon">
                             <span class="icon" aria-hidden="true">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -65,14 +65,14 @@
                             </span>
                             <input id="email" type="email" class="form-input @error('email') is-invalid @enderror"
                                 name="email" value="{{ old('email') }}" required autocomplete="email"
-                                placeholder="name@example.com" inputmode="email">
+                                placeholder="{{ __('name@example.com') }}" inputmode="email">
                         </div>
                         @error('email')
                             <span class="error-message" role="alert">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password">{{ __('Password') }}</label>
                         <div class="input-with-icon">
                             <span class="icon" aria-hidden="true">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -92,7 +92,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="password-confirm">Confirm Password</label>
+                        <label for="password-confirm">{{ __('Confirm Password') }}</label>
                         <div class="input-with-icon">
                             <span class="icon" aria-hidden="true">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -111,10 +111,10 @@
                         </div>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn-primary">Create Account</button>
+                        <button type="submit" class="btn-primary">{{ __('Create Account') }}</button>
                     </div>
                     <div class="login-link">
-                        <p><a href="{{ route('login') }}">Already have an account?</a></p>
+                        <p><a href="{{ route('login') }}">{{ __('Already have an account?') }}</a></p>
                     </div>
                 </form>
             </div>

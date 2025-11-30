@@ -114,7 +114,7 @@ class ProductController extends Controller
 
         return redirect()->route('product.index')
             ->with('success', 1)
-            ->with('msg', 'Product created successfully!');
+            ->with('msg', __('Product created successfully!'));
     }
 
     /**
@@ -180,7 +180,7 @@ class ProductController extends Controller
 
         return redirect()->route('product.index')
             ->with('success', 1)
-            ->with('msg', 'Product updated successfully!');
+            ->with('msg', __('Product updated successfully!'));
     }
 
     /**
@@ -202,13 +202,13 @@ class ProductController extends Controller
             $view = view('admin.backends.product.table', compact('products'))->render();
             return response()->json([
                 'status' => 1,
-                'msg' => 'Product deleted successfully!',
+                'msg' => __('Product deleted successfully!'),
                 'view' => $view
             ]);
         }
 
         return redirect()->route('product.index')
             ->with('success', 1)
-            ->with('msg', 'Product deleted successfully!');
+            ->with('msg', __('Product deleted successfully!'));
     }
 }

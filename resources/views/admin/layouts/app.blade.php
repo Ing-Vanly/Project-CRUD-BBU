@@ -121,6 +121,22 @@
         .navbar-user-dropdown .dropdown-menu {
             min-width: 260px;
         }
+
+        .locale-dropdown .dropdown-item.active {
+            font-weight: 600;
+            background-color: #f3f4f6;
+        }
+
+        .locale-dropdown .dropdown-menu form {
+            width: 100%;
+        }
+
+        .locale-flag {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
     </style>
 </head>
 
@@ -188,12 +204,11 @@
                     "progressBar": true
                 };
 
-                // Check if success is 1 (success)
+                const toastMessage = @json(Session::has('msg') ? __(Session::get('msg')) : '');
                 @if (Session::get('success') == 1)
-                    toastr.success("{{ Session::get('msg') }}");
+                    toastr.success(toastMessage);
                 @else
-                    // Otherwise, show an error
-                    toastr.error("{{ Session::get('msg') }}");
+                    toastr.error(toastMessage);
                 @endif
             @endif
         });

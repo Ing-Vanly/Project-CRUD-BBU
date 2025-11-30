@@ -4,13 +4,13 @@
         <div class="login-card">
             <div class="login-form">
                 <div class="form-header">
-                    <h2>Sign In</h2>
-                    <p>Please enter your credentials to proceed</p>
+                    <h2>{{ __('Sign In') }}</h2>
+                    <p>{{ __('Please enter your credentials to proceed') }}</p>
                 </div>
                 <form method="POST" action="{{ route('login') }}" novalidate>
                     @csrf
                     <div class="form-group">
-                        <label for="email">Email Address</label>
+                        <label for="email">{{ __('Email Address') }}</label>
                         <div class="input-with-icon">
                             <span class="icon" aria-hidden="true">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -22,7 +22,7 @@
                             </span>
                             <input id="email" type="email" class="form-input @error('email') is-invalid @enderror"
                                 name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
-                                placeholder="name@example.com" inputmode="email">
+                                placeholder="{{ __('name@example.com') }}" inputmode="email">
                         </div>
                         @error('email')
                             <span class="error-message" role="alert">{{ $message }}</span>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <div class="label-with-link">
-                            <label for="password">Password</label>
+                            <label for="password">{{ __('Password') }}</label>
                         </div>
                         <div class="input-with-icon">
                             <span class="icon" aria-hidden="true">
@@ -53,17 +53,17 @@
                     </div>
                     <div class="remember-me">
                         <input id="remember" name="remember" type="checkbox" {{ old('remember') ? 'checked' : '' }}>
-                        <label for="remember">Remember me</label>
+                        <label for="remember">{{ __('Remember me') }}</label>
                         @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="forgot-link">Forgot password?</a>
+                            <a href="{{ route('password.request') }}" class="forgot-link">{{ __('Forgot password?') }}</a>
                         @endif
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn-primary">Sign in</button>
+                        <button type="submit" class="btn-primary">{{ __('Sign in') }}</button>
                     </div>
                     <div class="register-link">
                         <p>
-                            <a href="{{ route('register') }}">Don't have an account?</a>
+                            <a href="{{ route('register') }}">{{ __("Don't have an account?") }}</a>
                         </p>
                     </div>
                 </form>

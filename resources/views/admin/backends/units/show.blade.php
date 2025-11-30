@@ -67,20 +67,20 @@
         <div class="container-fluid">
             <div class="mb-4">
                 <h2 class="mb-1">{{ $unit->name }}</h2>
-                <p class="text-muted">Unit Details</p>
+                <p class="text-muted">{{ __('Unit Details') }}</p>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
                     <div class="detail-card">
                         <h5 class="section-title">
-                            <i class="fas fa-ruler"></i> Basic Information
+                            <i class="fas fa-ruler"></i> {{ __('Basic Information') }}
                         </h5>
 
-                        <div class="field-label">Name</div>
+                        <div class="field-label">{{ __('Name') }}</div>
                         <div class="field-value">{{ $unit->name }}</div>
 
-                        <div class="field-label">Slug</div>
+                        <div class="field-label">{{ __('Slug') }}</div>
                         <div class="field-value">{{ $unit->slug }}</div>
                     </div>
                 </div>
@@ -88,12 +88,12 @@
                 <div class="col-md-6">
                     <div class="detail-card">
                         <h5 class="section-title">
-                            <i class="fas fa-align-left"></i> Description
+                            <i class="fas fa-align-left"></i> {{ __('Description') }}
                         </h5>
                         @if($unit->description)
                             <p>{{ $unit->description }}</p>
                         @else
-                            <p class="text-muted font-italic">No description provided</p>
+                            <p class="text-muted font-italic">{{ __('No description provided') }}</p>
                         @endif
                     </div>
                 </div>
@@ -101,20 +101,20 @@
 
             <div class="metadata-section">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="metadata-title mb-0">Metadata</h5>
+                    <h5 class="metadata-title mb-0">{{ __('Metadata') }}</h5>
                     <a href="{{ route('unit.index') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left"></i> Back to Units
+                        <i class="fas fa-arrow-left"></i> {{ __('Back to Units') }}
                     </a>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="field-label">Created At</div>
+                        <div class="field-label">{{ __('Created At') }}</div>
                         <div class="field-value">
                             <i class="far fa-calendar"></i> {{ $unit->created_at->format('d/m/Y') }}
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="field-label">Last Updated</div>
+                        <div class="field-label">{{ __('Last Updated') }}</div>
                         <div class="field-value">
                             <i class="far fa-calendar"></i> {{ $unit->updated_at->format('d/m/Y') }}
                         </div>

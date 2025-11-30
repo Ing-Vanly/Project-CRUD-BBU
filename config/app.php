@@ -82,6 +82,29 @@ return [
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Supported Locales
+    |--------------------------------------------------------------------------
+    |
+    | Define the locales that can be selected from the UI along with metadata
+    | that helps render the language picker.
+    |
+    */
+
+    'available_locales' => ['en', 'kh'],
+
+    'supported_locales' => [
+        'en' => [
+            'label' => 'English',
+            'flag' => 'https://flagcdn.com/w20/gb.png',
+        ],
+        'kh' => [
+            'label' => 'Khmer',
+            'flag' => 'https://flagcdn.com/w20/kh.png',
+        ],
+    ],
+
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
     /*

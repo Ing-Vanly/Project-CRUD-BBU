@@ -13,8 +13,8 @@
         </div>
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                    aria-label="Search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="{{ __('Search') }}"
+                    aria-label="{{ __('Search') }}">
                 <div class="input-group-append">
                     <button class="btn btn-sidebar">
                         <i class="fas fa-search fa-fw"></i>
@@ -30,7 +30,7 @@
                         <a href="{{ route('dashboard') }}"
                             class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Dashboard Page</p>
+                            <p>{{ __('Dashboard Page') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -41,7 +41,7 @@
                             class="nav-link {{ request()->routeIs('role.*') || request()->routeIs('user.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
-                                Manage Users
+                                {{ __('Manage Users') }}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -51,23 +51,16 @@
                                     <a href="{{ route('user.index') }}"
                                         class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
                                         <i class="fas fa-table nav-icon"></i>
-                                        <p>Table Users</p>
+                                        <p>{{ __('Table Users') }}</p>
                                     </a>
                                 </li>
                             @endcan
-                            {{-- <li class="nav-item">
-                            <a href=""
-                                class="nav-link">
-                                <i class="fas fa-users nav-icon"></i>
-                                <p>Customer</p>
-                            </a>
-                        </li> --}}
                             @can('role.view')
                                 <li class="nav-item">
                                     <a href="{{ route('role.index') }}"
                                         class="nav-link {{ request()->routeIs('role.*') ? 'active' : '' }}">
                                         <i class="fas fa-user-shield nav-icon"></i>
-                                        <p>Roles</p>
+                                        <p>{{ __('Roles') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -81,7 +74,7 @@
                             class="nav-link {{ request()->routeIs('category.*') || request()->routeIs('unit.*') || request()->routeIs('brand.*') || request()->routeIs('product.*') || request()->routeIs('order.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-boxes"></i>
                             <p>
-                                Manage Products
+                                {{ __('Manage Products') }}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -91,7 +84,7 @@
                                     <a href="{{ route('category.index') }}"
                                         class="nav-link {{ request()->routeIs('category.*') ? 'active' : '' }}">
                                         <i class="fas fa-tags nav-icon"></i>
-                                        <p>Category</p>
+                                        <p>{{ __('Category') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -100,7 +93,7 @@
                                     <a href="{{ route('unit.index') }}"
                                         class="nav-link {{ request()->routeIs('unit.*') ? 'active' : '' }}">
                                         <i class="fas fa-balance-scale nav-icon"></i>
-                                        <p>Unit</p>
+                                        <p>{{ __('Unit') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -109,7 +102,7 @@
                                     <a href="{{ route('brand.index') }}"
                                         class="nav-link {{ request()->routeIs('brand.*') ? 'active' : '' }}">
                                         <i class="fas fa-certificate nav-icon"></i>
-                                        <p>Brand</p>
+                                        <p>{{ __('Brand') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -118,7 +111,7 @@
                                     <a href="{{ route('product.index') }}"
                                         class="nav-link {{ request()->routeIs('product.*') ? 'active' : '' }}">
                                         <i class="fas fa-cube nav-icon"></i>
-                                        <p>Product</p>
+                                        <p>{{ __('Product') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -127,7 +120,7 @@
                                     <a href="{{ route('order.index') }}"
                                         class="nav-link {{ request()->routeIs('order.*') ? 'active' : '' }}">
                                         <i class="fas fa-clipboard-list nav-icon"></i>
-                                        <p>Orders</p>
+                                        <p>{{ __('Orders') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -139,7 +132,7 @@
                         <a href="#" class="nav-link {{ request()->routeIs('post.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>
-                                Manage Posts
+                                {{ __('Manage Posts') }}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -148,7 +141,7 @@
                                 <a href="{{ route('post.index') }}"
                                     class="nav-link {{ request()->routeIs('post.index') ? 'active' : '' }}">
                                     <i class="fas fa-list nav-icon"></i>
-                                    <p>All Posts</p>
+                                    <p>{{ __('All Posts') }}</p>
                                 </a>
                             </li>
                             @can('post.create')
@@ -156,7 +149,7 @@
                                     <a href="{{ route('post.create') }}"
                                         class="nav-link {{ request()->routeIs('post.create') ? 'active' : '' }}">
                                         <i class="fas fa-plus-circle nav-icon"></i>
-                                        <p>Create Post</p>
+                                        <p>{{ __('Create Post') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -168,7 +161,7 @@
                         <a href="#" class="nav-link {{ request()->routeIs('author.*') ? 'active' : '' }}">
                             <i class="fas fa-user-tie nav-icon"></i>
                             <p>
-                                Manage Authors
+                                {{ __('Manage Authors') }}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -178,7 +171,7 @@
                                     <a href="{{ route('author.create') }}"
                                         class="nav-link {{ request()->routeIs('author.create') || request()->routeIs('author.create') ? 'active' : '' }}">
                                         <i class="fas fa-plus-circle nav-icon"></i>
-                                        <p>Add Author</p>
+                                        <p>{{ __('Add Author') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -186,7 +179,7 @@
                                 <a href="{{ route('author.index') }}"
                                     class="nav-link {{ request()->routeIs('author.index') || request()->routeIs('author.edit') || request()->routeIs('author.show') ? 'active' : '' }}">
                                     <i class="fas fa-list nav-icon"></i>
-                                    <p>Author List</p>
+                                    <p>{{ __('Author List') }}</p>
                                 </a>
                             </li>
                         </ul>

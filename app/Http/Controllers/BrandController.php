@@ -79,7 +79,7 @@ class BrandController extends Controller
 
         return redirect()->route('brand.index')
             ->with('success', 1)
-            ->with('msg', 'Brand created successfully!');
+            ->with('msg', __('Brand created successfully!'));
     }
 
     /**
@@ -138,7 +138,7 @@ class BrandController extends Controller
 
         return redirect()->route('brand.index')
             ->with('success', 1)
-            ->with('msg', 'Brand updated successfully!');
+            ->with('msg', __('Brand updated successfully!'));
     }
 
     /**
@@ -160,13 +160,13 @@ class BrandController extends Controller
             $view = view('admin.backends.brand.table', compact('brands'))->render();
             return response()->json([
                 'status' => 1,
-                'msg' => 'Brand deleted successfully!',
+                'msg' => __('Brand deleted successfully!'),
                 'view' => $view
             ]);
         }
 
         return redirect()->route('brand.index')
             ->with('success', 1)
-            ->with('msg', 'Brand deleted successfully!');
+            ->with('msg', __('Brand deleted successfully!'));
     }
 }

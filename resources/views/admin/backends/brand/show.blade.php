@@ -67,26 +67,26 @@
         <div class="container-fluid">
             <div class="mb-4">
                 <h2 class="mb-1">{{ $brand->name }}</h2>
-                <p class="text-muted">Brand Details</p>
+                <p class="text-muted">{{ __('Brand Details') }}</p>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
                     <div class="detail-card">
                         <h5 class="section-title">
-                            <i class="fas fa-tag"></i> Basic Information
+                            <i class="fas fa-tag"></i> {{ __('Basic Information') }}
                         </h5>
 
-                        <div class="field-label">Name</div>
+                        <div class="field-label">{{ __('Name') }}</div>
                         <div class="field-value">{{ $brand->name }}</div>
 
-                        <div class="field-label">Business ID</div>
+                        <div class="field-label">{{ __('Business ID') }}</div>
                         <div class="field-value">
                             <i class="fas fa-building"></i> {{ $brand->business_id ?? 1 }}
                         </div>
 
                         @if($brand->logo)
-                            <div class="field-label">Logo</div>
+                            <div class="field-label">{{ __('Logo') }}</div>
                             <div class="field-value">
                                 <img src="{{ asset($brand->logo) }}" alt="{{ $brand->name }}" style="max-width: 200px; border-radius: 8px;">
                             </div>
@@ -97,12 +97,12 @@
                 <div class="col-md-6">
                     <div class="detail-card">
                         <h5 class="section-title">
-                            <i class="fas fa-align-left"></i> Description
+                            <i class="fas fa-align-left"></i> {{ __('Description') }}
                         </h5>
                         @if($brand->description)
                             <p>{{ $brand->description }}</p>
                         @else
-                            <p class="text-muted font-italic">No description provided</p>
+                            <p class="text-muted font-italic">{{ __('No description provided') }}</p>
                         @endif
                     </div>
                 </div>
@@ -110,26 +110,26 @@
 
             <div class="metadata-section">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="metadata-title mb-0">Metadata</h5>
+                    <h5 class="metadata-title mb-0">{{ __('Metadata') }}</h5>
                     <a href="{{ route('brand.index') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left"></i> Back to Brands
+                        <i class="fas fa-arrow-left"></i> {{ __('Back to Brands') }}
                     </a>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="field-label">Created By</div>
+                        <div class="field-label">{{ __('Created By') }}</div>
                         <div class="field-value">
-                            <i class="fas fa-user"></i> admin
+                            <i class="fas fa-user"></i> {{ __('Admin') }}
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="field-label">Created At</div>
+                        <div class="field-label">{{ __('Created At') }}</div>
                         <div class="field-value">
                             <i class="far fa-calendar"></i> {{ $brand->created_at->format('d/m/Y') }}
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="field-label">Last Updated</div>
+                        <div class="field-label">{{ __('Last Updated') }}</div>
                         <div class="field-value">
                             <i class="far fa-calendar"></i> {{ $brand->updated_at->format('d/m/Y') }}
                         </div>

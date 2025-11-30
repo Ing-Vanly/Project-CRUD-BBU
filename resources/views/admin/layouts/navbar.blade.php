@@ -26,6 +26,11 @@
                 }
             }
             $userInitials = $initials !== '' ? $initials : 'U';
+            $supportedLocales = config('app.supported_locales', []);
+            $currentLocale = app()->getLocale();
+            $fallbackLocaleKey = ! empty($supportedLocales) ? array_key_first($supportedLocales) : null;
+            $currentLocaleMeta = $supportedLocales[$currentLocale]
+                ?? ($fallbackLocaleKey ? $supportedLocales[$fallbackLocaleKey] : ['label' => strtoupper($currentLocale)]);
         @endphp
         <li class="nav-item dropdown d-flex align-items-center">
             <a class="nav-link position-relative d-flex align-items-center" data-toggle="dropdown" href="#"
@@ -69,6 +74,40 @@
                 </a>
             </div>
         </li>
+
+        @if (count($supportedLocales) > 1)
+            <li class="nav-item dropdown d-flex align-items-center ml-3 locale-dropdown">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" data-toggle="dropdown" href="#"
+                    role="button" aria-haspopup="true" aria-expanded="false">
+                    @if (!empty($currentLocaleMeta['flag']))
+                        <img src="{{ $currentLocaleMeta['flag'] }}" alt="{{ __($currentLocaleMeta['label'] ?? $currentLocale) }}"
+                            class="locale-flag mr-2">
+                    @endif
+                    <span class="font-weight-bold text-secondary">
+                        {{ __($currentLocaleMeta['label'] ?? strtoupper($currentLocale)) }}
+                    </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right p-0 overflow-hidden">
+                    @foreach ($supportedLocales as $localeCode => $localeMeta)
+                        <form action="{{ route('locale.switch') }}" method="POST" class="m-0">
+                            @csrf
+                            <input type="hidden" name="locale" value="{{ $localeCode }}">
+                            <button type="submit"
+                                class="dropdown-item d-flex align-items-center {{ $localeCode === $currentLocale ? 'active' : '' }}">
+                                @if (!empty($localeMeta['flag']))
+                                    <img src="{{ $localeMeta['flag'] }}" alt="{{ __($localeMeta['label'] ?? $localeCode) }}"
+                                        class="locale-flag mr-2">
+                                @endif
+                                <span>{{ __($localeMeta['label'] ?? strtoupper($localeCode)) }}</span>
+                                @if ($localeCode === $currentLocale)
+                                    <i class="fas fa-check text-primary ml-auto"></i>
+                                @endif
+                            </button>
+                        </form>
+                    @endforeach
+                </div>
+            </li>
+        @endif
         
         <li class="nav-item d-flex align-items-center ml-3">
             <div class="btn-group navbar-user-dropdown">
@@ -76,7 +115,7 @@
                     data-toggle="dropdown">
                     <span class="navbar-profile-avatar mr-2">{{ $userInitials }}</span>
                     <span class="font-weight-bold">{{ $userName }}</span>
-                    <span class="sr-only">Toggle Dropdown</span>
+                    <span class="sr-only">{{ __('Toggle Dropdown') }}</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" role="menu">
                     <div class="dropdown-header text-center">
